@@ -1,0 +1,27 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="630" fill="#F8FAFC"/>
+  <circle cx="152" cy="102" r="220" fill="#06B6D4" fill-opacity="0.18"/>
+  <circle cx="1010" cy="116" r="260" fill="#2563EB" fill-opacity="0.18"/>
+  <circle cx="760" cy="558" r="220" fill="#8B5CF6" fill-opacity="0.1"/>
+  <rect x="82" y="70" width="1036" height="490" rx="56" fill="white" fill-opacity="0.72" stroke="white" stroke-width="2"/>
+  <path d="M821 205C821 146.353 773.647 99 715 99C656.353 99 609 146.353 609 205C609 233.483 620.255 259.331 638.554 278.393C623.92 298.742 615.25 323.705 615.25 350.75C615.25 418.542 670.208 473.5 738 473.5C805.792 473.5 860.75 418.542 860.75 350.75C860.75 320.939 850.12 293.611 832.432 272.346C846.781 254.027 821 232.025 821 205Z" fill="url(#tooth)" opacity="0.96"/>
+  <path d="M704 442C688 486 664 522 636 522C612 522 602 493 615 449C631 395 654 358 683 358C714 358 719 399 704 442Z" fill="#EFF6FF"/>
+  <path d="M792 442C808 486 832 522 860 522C884 522 894 493 881 449C865 395 842 358 813 358C782 358 777 399 792 442Z" fill="#EFF6FF"/>
+  <path d="M212 186H470" stroke="#2563EB" stroke-width="5" stroke-linecap="round"/>
+  <text x="212" y="264" fill="#0F172A" font-family="Inter, Arial, sans-serif" font-size="62" font-weight="800">Crafting Beautiful</text>
+  <text x="212" y="338" fill="#2563EB" font-family="Inter, Arial, sans-serif" font-size="62" font-weight="800">Smiles</text>
+  <text x="212" y="402" fill="#475569" font-family="Inter, Arial, sans-serif" font-size="28">Premium advanced dental care in Lohegaon, Pune</text>
+  <rect x="212" y="444" width="246" height="58" rx="29" fill="url(#button)"/>
+  <text x="248" y="481" fill="white" font-family="Inter, Arial, sans-serif" font-size="21" font-weight="700">Book Appointment</text>
+  <defs>
+    <linearGradient id="tooth" x1="610" y1="96" x2="882" y2="522" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFFFFF"/>
+      <stop offset="0.55" stop-color="#ECFEFF"/>
+      <stop offset="1" stop-color="#DBEAFE"/>
+    </linearGradient>
+    <linearGradient id="button" x1="212" y1="444" x2="458" y2="502" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#2563EB"/>
+      <stop offset="1" stop-color="#06B6D4"/>
+    </linearGradient>
+  </defs>
+</svg>
