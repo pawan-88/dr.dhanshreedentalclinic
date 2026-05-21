@@ -94,8 +94,8 @@ const services = [
 ];
 
 const stats = [
-  { value: 5000, suffix: "+", label: "Happy Patients", icon: Star },
-  { value: 10, suffix: "+", label: "Years Experience", icon: Award },
+  { value: 500, suffix: "+", label: "Happy Patients", icon: Star },
+  { value: 5, suffix: "+", label: "Years Experience", icon: Award },
   { value: 100, suffix: "%", label: "Advanced Equipment", icon: Microscope },
   { value: 24, suffix: "h", label: "Fast WhatsApp Response", icon: Timer },
 ];
@@ -562,11 +562,11 @@ export default function LuxuryDentalExperience() {
                   <span>Comfort-first dental care</span>
                 </div>
                 <div className="mini-stat">
-                  <strong>5000+</strong>
+                  <strong>500+</strong>
                   <span>Smiles cared for</span>
                 </div>
                 <div className="mini-stat">
-                  <strong>10+</strong>
+                  <strong>5+</strong>
                   <span>Years expertise</span>
                 </div>
               </div>
@@ -710,9 +710,13 @@ export default function LuxuryDentalExperience() {
               transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
             >
               <div className="portrait-glow" />
-              <div className="doctor-avatar">
-                <span>Dr</span>
-              </div>
+              <img
+                className="doctor-photo"
+                src="/images/Dr.ImgD.jpg"
+                alt="Dr. Dhanshree Ghuge (Sanap), Founder and Chief Dentist at Dr. Dhanshree's Dental Clinic"
+                loading="lazy"
+                decoding="async"
+              />
               <div className="doctor-nameplate">
                 <strong>Dr. Dhanshree Ghuge (Sanap)</strong>
                 <span>Founder & Chief Dentist</span>

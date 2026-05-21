@@ -28,3 +28,12 @@ This repository includes `netlify.toml`.
 - Node version: `22`
 
 No Netlify UI publish-directory change is required after this file is deployed.
+
+## Vercel Deployment
+
+This repository includes `vercel.json`.
+
+- Framework preset: Next.js
+- Build command: `npm run build`
+- Install command: `npm install`
+- Node version: `22`

@@ -901,45 +901,53 @@ h3 {
   display: grid;
   min-height: 520px;
   overflow: hidden;
-  place-items: center;
   border-radius: 34px;
-  background:
-    radial-gradient(circle at 55% 30%, rgba(255, 255, 255, 0.8), transparent 16rem),
-    linear-gradient(145deg, #dbeafe, #ecfeff);
+  background: #0f172a;
+  box-shadow:
+    0 30px 80px rgba(37, 99, 235, 0.22),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.45);
+}
+
+.doctor-portrait::after {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  content: "";
+  background: linear-gradient(
+    180deg,
+    transparent 42%,
+    rgba(15, 23, 42, 0.08) 68%,
+    rgba(15, 23, 42, 0.42) 100%
+  );
+  pointer-events: none;
 }
 
 .portrait-glow {
   position: absolute;
-  width: 360px;
-  height: 360px;
+  inset: 12% 8% auto;
+  z-index: 0;
+  width: 84%;
+  height: 72%;
   border-radius: 999px;
-  background: radial-gradient(circle, rgba(37, 99, 235, 0.25), transparent 70%);
-  filter: blur(10px);
+  background: radial-gradient(circle, rgba(6, 182, 212, 0.28), transparent 70%);
+  filter: blur(18px);
 }
 
-.doctor-avatar {
+.doctor-photo {
   position: relative;
-  display: grid;
-  width: min(65%, 300px);
-  aspect-ratio: 0.78;
-  place-items: center;
-  border-radius: 48% 48% 34% 34%;
-  color: rgba(255, 255, 255, 0.94);
-  background:
-    linear-gradient(160deg, rgba(255, 255, 255, 0.24), transparent 38%),
-    linear-gradient(135deg, #2563eb, #06b6d4);
-  box-shadow: 0 30px 80px rgba(37, 99, 235, 0.26);
-}
-
-.doctor-avatar span {
-  font-family: var(--font-sora), sans-serif;
-  font-size: clamp(4rem, 10vw, 7rem);
-  font-weight: 900;
-  letter-spacing: -0.08em;
+  z-index: 1;
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 520px;
+  object-fit: cover;
+  object-position: center 18%;
+  border-radius: 34px;
 }
 
 .doctor-nameplate {
   position: absolute;
+  z-index: 3;
   right: 18px;
   bottom: 18px;
   left: 18px;
