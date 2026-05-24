@@ -1,13 +1,14 @@
 "use client";
 
-import dynamic from "next/dynamic";
 import {
   ArrowRight,
   Award,
   CalendarCheck,
   Check,
+  ChevronDown,
   ChevronRight,
   Clock,
+  ExternalLink,
   Gem,
   HeartPulse,
   MapPin,
@@ -15,7 +16,6 @@ import {
   MessageCircle,
   Microscope,
   Phone,
-  Quote,
   ShieldCheck,
   Sparkles,
   Star,
@@ -30,18 +30,11 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Lenis from "lenis";
 import { FormEvent, ReactNode, useEffect, useMemo, useRef, useState } from "react";
 
-const DentalScene = dynamic(() => import("./premium-dental-scene"), {
-  ssr: false,
-  loading: () => (
-    <div className="scene-loader" aria-label="Loading interactive 3D dental scene">
-      <span />
-      <p>Preparing smile studio</p>
-    </div>
-  ),
-});
-
 const phoneNumber = "+918275172931";
 const whatsappNumber = "918275172931";
+const doctorName = "Dr. Dhanshree Sanap (Ghuge)";
+const googleReviewsUrl =
+  "https://www.google.com/maps/place/Dr.+DHANSHREE%27S+Dental+Clinic/@18.6033058,73.9285482,17z/data=!4m8!3m7!1s0x3bc2c7a86d8f74af:0x6a9c3fab4620f1c3!8m2!3d18.6033058!4d73.9285482!9m1!1b1!16s%2Fg%2F11v0q8xq8x";
 const whatsappIntro =
   "Hi Dr. Dhanshree's Dental Clinic, I would like to book an appointment.";
 
@@ -50,79 +43,129 @@ const navLinks = [
   { label: "Services", href: "#services" },
   { label: "Why Us", href: "#why-us" },
   { label: "Results", href: "#results" },
+  { label: "Reviews", href: "#reviews" },
   { label: "Doctor", href: "#doctor" },
+  { label: "FAQ", href: "#faq" },
   { label: "Contact", href: "#appointment" },
 ];
 
 const services = [
   {
     title: "Dental Implants",
-    description: "Permanent, natural-feeling replacements designed with precision digital planning.",
+    description: "Permanent tooth replacements planned digitally for a natural look, comfortable bite, and long-term confidence.",
     icon: ShieldCheck,
     accent: "#2563eb",
+    image: "/images/Dental-Implants.jpg",
   },
   {
     title: "Teeth Whitening",
-    description: "Clinical-grade brightening for a noticeably fresher smile in a short visit.",
+    description: "Professional whitening that lifts stains safely and gives you a brighter smile in a single comfortable visit.",
     icon: Sparkles,
     accent: "#06b6d4",
+    image: "/images/teeth white.jpg",
   },
   {
     title: "Root Canal",
-    description: "Comfort-first endodontic care that saves natural teeth with modern tools.",
+    description: "Gentle, pain-managed root canal treatment that saves your natural tooth and relieves infection quickly.",
     icon: HeartPulse,
     accent: "#6366f1",
+    image: "/images/root canel.jpg",
   },
   {
     title: "Braces",
-    description: "Metal, ceramic, and clear aligner options for aligned, confident smiles.",
+    description: "Metal, ceramic, and clear aligner options for children and adults who want straighter, healthier teeth.",
     icon: Stethoscope,
     accent: "#14b8a6",
+    image: "/images/braces.jpg",
   },
   {
     title: "Smile Design",
-    description: "Aesthetic planning for shape, shade, symmetry, and facial harmony.",
+    description: "Custom smile planning for shape, shade, and symmetry so your results look natural—not overdone.",
     icon: WandSparkles,
     accent: "#8b5cf6",
+    image: "/images/Veneers.jpg",
   },
   {
     title: "Cosmetic Dentistry",
-    description: "Veneers, bonding, polishing, and contouring for a premium finish.",
+    description: "Veneers, bonding, polishing, and contouring for a refined finish that suits your face and lifestyle.",
     icon: Gem,
     accent: "#0ea5e9",
+    image: "/images/Clear Aligners.jpg",
   },
 ];
 
 const stats = [
-  { value: 500, suffix: "+", label: "Happy Patients", icon: Star },
-  { value: 5, suffix: "+", label: "Years Experience", icon: Award },
+  { value: 1000, suffix: "+", label: "Happy Patients", icon: Star },
+  { value: 6, suffix: "+", label: "Years Experience", icon: Award },
   { value: 100, suffix: "%", label: "Advanced Equipment", icon: Microscope },
   { value: 24, suffix: "h", label: "Fast WhatsApp Response", icon: Timer },
 ];
 
 const testimonials = [
   {
-    name: "Priya S.",
-    treatment: "Smile Design",
-    text: "The clinic feels premium and calm. The doctor explained every step and my smile makeover looks natural.",
+    name: "Sneha Patil",
+    treatment: "Root Canal Treatment",
+    text: "I had severe tooth pain and was very nervous. Dr. Dhanshree explained every step clearly before starting. The root canal was painless, the clinic is spotless, and the follow-up care was excellent.",
   },
   {
-    name: "Rahul K.",
-    treatment: "Root Canal",
-    text: "I was nervous about pain, but the treatment was comfortable and the follow-up care was excellent.",
+    name: "Amit Deshmukh",
+    treatment: "Dental Cleaning",
+    text: "Very professional clinic near Eastern Royale Society. Scaling was done gently, staff is polite, and WhatsApp appointment booking is quick and easy. Highly recommended in Lohegaon.",
   },
   {
-    name: "Anjali M.",
+    name: "Pooja Kulkarni",
     treatment: "Teeth Whitening",
-    text: "Beautiful clinic, very hygienic, and the results were visible immediately. Highly recommended.",
+    text: "Got teeth whitening done here and noticed a visible difference after one session. The doctor is soft-spoken, caring, and the clinic feels modern, calm, and hygienic.",
+  },
+  {
+    name: "Vikram Shinde",
+    treatment: "Braces Consultation",
+    text: "Visited for my daughter's braces consultation. Dr. Sanap explained metal, ceramic, and aligner options with clear guidance and no pressure. Very transparent and patient-friendly.",
+  },
+  {
+    name: "Meera Joshi",
+    treatment: "Smile Design",
+    text: "Beautiful clinic with a reassuring atmosphere. My smile design looks natural, and the doctor checked on me after treatment. Truly patient-first dental care.",
+  },
+];
+
+const faqs = [
+  {
+    question: "Is root canal treatment painful?",
+    answer:
+      "Most patients feel little to no pain during treatment. We use modern anesthesia and gentle techniques, and Dr. Dhanshree explains each step before starting so you feel calm and informed.",
+  },
+  {
+    question: "How do I book an appointment?",
+    answer:
+      "The fastest way is WhatsApp. Tap Book Visit, share your name, phone number, and treatment, and our team will confirm your slot. You can also call us directly at +91 82751 72931.",
+  },
+  {
+    question: "What are your clinic timings?",
+    answer: "We are open Monday to Sunday, 10:00 AM to 9:00 PM, including weekends and most holidays.",
+  },
+  {
+    question: "Where is the clinic located?",
+    answer:
+      "Shop No. 2, Muktai Plaza, Wadgaon Shinde Road, opposite Eastern Royale Society, Pathare Wasti, Lohegaon, Pune 411047. Google Maps directions are available in the footer.",
+  },
+  {
+    question: "Do you treat children and families?",
+    answer:
+      "Yes. We offer gentle dental care for children and adults, including checkups, fillings, extractions, braces consultations, and preventive care for the whole family.",
+  },
+  {
+    question: "Can I get a treatment cost estimate before starting?",
+    answer:
+      "Yes. We believe in transparent guidance. After examination, we explain recommended options, expected outcomes, and estimated costs so you can decide comfortably.",
   },
 ];
 
 const doctorHighlights = [
-  "Founder and Chief Dentist",
-  "Advanced cosmetic and restorative dentistry",
-  "Painless root canal and preventive care focus",
-  "Personalized treatment planning for every patient",
+  "Founder & Chief Dentist with 6+ years of experience",
+  "Cosmetic, restorative, and preventive dentistry",
+  "Comfort-focused root canal and smile design care",
+  "Clear treatment planning for every patient",
 ];
 
 function whatsappUrl(message = whatsappIntro) {
@@ -192,32 +235,39 @@ function SectionHeading({
 
 function AnimatedCounter({ value, suffix }: { value: number; suffix: string }) {
   const nodeRef = useRef<HTMLSpanElement>(null);
+  const displayValue = `${value}${suffix}`;
 
   useEffect(() => {
-    if (!nodeRef.current) return;
+    const node = nodeRef.current;
+    if (!node) return;
 
-    const counter = { value: 0 };
-    const tween = gsap.to(counter, {
-      value,
-      duration: 2,
-      ease: "power3.out",
-      scrollTrigger: {
-        trigger: nodeRef.current,
-        start: "top 85%",
+    node.textContent = displayValue;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) return;
+
+        const start = performance.now();
+        const duration = 1800;
+
+        const tick = (now: number) => {
+          const progress = Math.min((now - start) / duration, 1);
+          const eased = 1 - Math.pow(1 - progress, 3);
+          node.textContent = `${Math.round(value * eased)}${suffix}`;
+          if (progress < 1) requestAnimationFrame(tick);
+        };
+
+        requestAnimationFrame(tick);
+        observer.disconnect();
       },
-      onUpdate: () => {
-        if (nodeRef.current) {
-          nodeRef.current.textContent = `${Math.round(counter.value)}${suffix}`;
-        }
-      },
-    });
+      { threshold: 0.35 },
+    );
 
-    return () => {
-      tween.kill();
-    };
-  }, [suffix, value]);
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, [displayValue, suffix, value]);
 
-  return <span ref={nodeRef}>0{suffix}</span>;
+  return <span ref={nodeRef}>{displayValue}</span>;
 }
 
 function BeforeAfterSlider() {
@@ -226,29 +276,27 @@ function BeforeAfterSlider() {
   return (
     <div className="comparison-card reveal">
       <div className="comparison-toolbar">
-        <span>Realistic Smile Preview</span>
-        <span>{position}% after</span>
+        <span>Teeth Whitening Result</span>
+        <span>Drag to compare</span>
       </div>
-      <div className="comparison-viewport">
-        <div className="comparison-image before">
-          <div className="smile-art">
-            <span />
-            <strong>Before</strong>
-          </div>
-        </div>
+      <div className="comparison-viewport comparison-photo">
+        <img
+          className="comparison-image before"
+          src="/images/Whitening.jpg"
+          alt="Before teeth whitening treatment"
+        />
         <div
           className="comparison-image after"
           style={{ clipPath: `inset(0 ${100 - position}% 0 0)` }}
         >
-          <div className="smile-art polished">
-            <span />
-            <strong>After</strong>
-          </div>
+          <img src="/images/Whitening.jpg" alt="After teeth whitening treatment" />
         </div>
         <div className="comparison-handle" style={{ left: `${position}%` }}>
           <ChevronRight size={18} />
           <ChevronRight size={18} />
         </div>
+        <div className="comparison-label before-label">Before</div>
+        <div className="comparison-label after-label">After</div>
         <input
           aria-label="Drag to compare before and after dental results"
           className="comparison-range"
@@ -263,11 +311,55 @@ function BeforeAfterSlider() {
   );
 }
 
+function FaqSection() {
+  const [openIndex, setOpenIndex] = useState(0);
+
+  return (
+    <section id="faq" className="section faq-section">
+      <SectionHeading
+        eyebrow="Common Questions"
+        title="Answers before your first visit"
+        description="Quick answers to the questions Lohegaon patients ask us most often about treatments, timings, and booking."
+      />
+      <div className="faq-list">
+        {faqs.map((item, index) => {
+          const isOpen = openIndex === index;
+          return (
+            <article className={`faq-item gsap-reveal ${isOpen ? "open" : ""}`} key={item.question}>
+              <button
+                type="button"
+                aria-expanded={isOpen}
+                onClick={() => setOpenIndex(isOpen ? -1 : index)}
+              >
+                <span>{item.question}</span>
+                <ChevronDown size={20} />
+              </button>
+              <div className="faq-answer">
+                <p>{item.answer}</p>
+              </div>
+            </article>
+          );
+        })}
+      </div>
+    </section>
+  );
+}
+
 function AppointmentForm() {
   const [form, setForm] = useState({ name: "", phone: "", treatment: "Smile Design" });
+  const [phoneError, setPhoneError] = useState("");
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    const digits = form.phone.replace(/\D/g, "");
+    const normalizedPhone = digits.length === 12 && digits.startsWith("91") ? digits.slice(2) : digits;
+
+    if (normalizedPhone.length !== 10) {
+      setPhoneError("Please enter a valid 10-digit mobile number.");
+      return;
+    }
+
+    setPhoneError("");
     const message = `Hello Dr. Dhanshree's Dental Clinic,\n\nI would like to book an appointment.\n\nName: ${form.name}\nPhone: ${form.phone}\nTreatment: ${form.treatment}`;
     window.open(whatsappUrl(message), "_blank", "noopener,noreferrer");
   }
@@ -289,9 +381,14 @@ function AppointmentForm() {
           required
           type="tel"
           value={form.phone}
-          placeholder="+91 mobile number"
-          onChange={(event) => setForm((current) => ({ ...current, phone: event.target.value }))}
+          placeholder="10-digit mobile number"
+          pattern="[0-9+\s-]{10,14}"
+          onChange={(event) => {
+            setPhoneError("");
+            setForm((current) => ({ ...current, phone: event.target.value }));
+          }}
         />
+        {phoneError ? <span className="form-error">{phoneError}</span> : null}
       </label>
       <label>
         <span>Treatment</span>
@@ -310,7 +407,7 @@ function AppointmentForm() {
         </select>
       </label>
       <button type="submit">
-        Book Premium Consultation
+        Book Consultation on WhatsApp
         <ArrowRight size={18} />
       </button>
     </form>
@@ -321,7 +418,6 @@ export default function LuxuryDentalExperience() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
   const [scrollProgress, setScrollProgress] = useState(0);
-  const [testimonialIndex, setTestimonialIndex] = useState(0);
   const shellRef = useRef<HTMLDivElement>(null);
   const heroX = useMotionValue(0);
   const heroY = useMotionValue(0);
@@ -338,11 +434,15 @@ export default function LuxuryDentalExperience() {
   useEffect(() => {
     if (reducedMotion) return;
 
+    gsap.registerPlugin(ScrollTrigger);
+
     const lenis = new Lenis({
       lerp: 0.09,
       wheelMultiplier: 0.85,
       touchMultiplier: 1.2,
     });
+
+    lenis.on("scroll", ScrollTrigger.update);
 
     let frame = 0;
     const raf = (time: number) => {
@@ -351,6 +451,7 @@ export default function LuxuryDentalExperience() {
     };
 
     frame = requestAnimationFrame(raf);
+    ScrollTrigger.refresh();
 
     return () => {
       cancelAnimationFrame(frame);
@@ -394,6 +495,8 @@ export default function LuxuryDentalExperience() {
       });
     });
 
+    ScrollTrigger.refresh();
+
     return () => {
       ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
     };
@@ -428,14 +531,6 @@ export default function LuxuryDentalExperience() {
     };
   }, []);
 
-  useEffect(() => {
-    const interval = window.setInterval(() => {
-      setTestimonialIndex((current) => (current + 1) % testimonials.length);
-    }, 5200);
-
-    return () => window.clearInterval(interval);
-  }, []);
-
   return (
     <div
       ref={shellRef}
@@ -454,9 +549,11 @@ export default function LuxuryDentalExperience() {
 
       <header className="floating-nav">
         <a className="brand" href="#home" aria-label="Dr. Dhanshree's Dental Clinic home">
-          <span className="brand-mark">D</span>
+          <span className="brand-mark">
+            <img src="/images/logo.jpeg" alt="" />
+          </span>
           <span>
-            <strong>Dr. Dhanshree</strong>
+            <strong>Dr. Dhanshree's</strong>
             <small>Dental Clinic</small>
           </span>
         </a>
@@ -532,41 +629,42 @@ export default function LuxuryDentalExperience() {
             >
               <div className="hero-kicker">
                 <Sparkles size={16} />
-                Luxury smile studio in Lohegaon, Pune
+                Trusted dental clinic in Lohegaon, Pune
               </div>
               <h1>
-                <span>Crafting Beautiful Smiles</span>
-                <span>with Advanced Dental Care</span>
+                <span>Healthy, Confident Smiles</span>
+                <span>with Gentle Dental Care</span>
               </h1>
               <p>
-                Premium dental treatments with modern technology, expert doctors, and personalized care.
+                Modern treatments, a hygienic clinic environment, and {doctorName} guiding every step—from
+                checkups and root canals to smile design and cosmetic dentistry.
               </p>
               <div className="hero-actions">
                 <MagneticButton href={whatsappUrl()} variant="primary">
                   Book Appointment
                   <CalendarCheck size={18} />
                 </MagneticButton>
-                <MagneticButton href="#services" variant="secondary">
-                  Explore Services
-                  <ArrowRight size={18} />
+                <MagneticButton href={googleReviewsUrl} variant="secondary">
+                  Read Google Reviews
+                  <ExternalLink size={18} />
                 </MagneticButton>
               </div>
               <div className="hero-trust-row">
-                <div className="rating-card">
+                <a className="rating-card google-rating-card" href={googleReviewsUrl} target="_blank" rel="noreferrer">
                   <div>
                     {[...Array(5)].map((_, index) => (
                       <Star key={index} size={15} fill="currentColor" />
                     ))}
                   </div>
-                  <strong>4.9 patient rating</strong>
-                  <span>Comfort-first dental care</span>
-                </div>
+                  <strong>4.9 Google rating</strong>
+                  <span>Read patient reviews</span>
+                </a>
                 <div className="mini-stat">
-                  <strong>500+</strong>
+                  <strong>1000+</strong>
                   <span>Smiles cared for</span>
                 </div>
                 <div className="mini-stat">
-                  <strong>5+</strong>
+                  <strong>6+</strong>
                   <span>Years expertise</span>
                 </div>
               </div>
@@ -578,8 +676,19 @@ export default function LuxuryDentalExperience() {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               transition={{ duration: 1, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
             >
-              <div className="scene-shell">
-                <DentalScene />
+              <div className="scene-shell clinic-photo-shell">
+                <img
+                  className="clinic-hero-photo"
+                  src="/images/page.jpg"
+                  alt="Clean and modern dental clinic interior at Dr. Dhanshree's Dental Clinic, Lohegaon"
+                />
+                <div className="doctor-hero-card">
+                  <img src="/images/Dr.ImgD.jpg" alt={doctorName} />
+                  <div>
+                    <strong>{doctorName}</strong>
+                    <span>Founder & Chief Dentist</span>
+                  </div>
+                </div>
               </div>
               <motion.div
                 className="floating-badge top"
@@ -587,7 +696,7 @@ export default function LuxuryDentalExperience() {
                 transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
               >
                 <ShieldCheck size={18} />
-                Sterile Digital Care
+                Hygienic Modern Clinic
               </motion.div>
               <motion.div
                 className="floating-badge bottom"
@@ -595,7 +704,7 @@ export default function LuxuryDentalExperience() {
                 transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut" }}
               >
                 <Sparkles size={18} />
-                Smile Design Ready
+                Same-Day Appointments
               </motion.div>
             </motion.div>
           </div>
@@ -604,9 +713,9 @@ export default function LuxuryDentalExperience() {
         <section id="services" className="section services-section">
           <div className="section-blob blob-left" data-parallax="-10" />
           <SectionHeading
-            eyebrow="Signature Treatments"
-            title="High-precision dental care with a luxury patient journey"
-            description="Every service card is designed around trust, comfort, clarity, and conversion so visitors can choose care with confidence."
+            eyebrow="Our Treatments"
+            title="Complete dental care for every stage of your smile"
+            description="From preventive checkups to advanced cosmetic work, each treatment is explained clearly so you know what to expect before you visit."
           />
           <div className="services-grid">
             {services.map((service, index) => {
@@ -616,9 +725,12 @@ export default function LuxuryDentalExperience() {
                   className="service-card gsap-reveal"
                   key={service.title}
                   style={{ "--accent": service.accent } as React.CSSProperties}
-                  whileHover={{ y: -12, rotateX: 4, rotateY: -4 }}
+                  whileHover={{ y: -10 }}
                   transition={{ type: "spring", stiffness: 260, damping: 18 }}
                 >
+                  <div className="service-photo">
+                    <img src={service.image} alt={`${service.title} at Dr. Dhanshree's Dental Clinic`} loading="lazy" />
+                  </div>
                   <span className="service-index">0{index + 1}</span>
                   <div className="service-icon">
                     <Icon size={26} />
@@ -639,10 +751,10 @@ export default function LuxuryDentalExperience() {
           <div className="why-panel">
             <div className="why-copy reveal">
               <span className="eyebrow">Why Choose Us</span>
-              <h2>Designed for people who want advanced care without anxiety.</h2>
+              <h2>Advanced care with a calm, patient-first approach.</h2>
               <p>
-                From the first WhatsApp message to the final smile check, the experience is built to feel clear,
-                calm, hygienic, and premium.
+                Whether it is your first visit or a complex treatment plan, we focus on clear communication,
+                gentle chairside care, and a clean clinic experience you can trust.
               </p>
               <ul>
                 {[
@@ -678,17 +790,17 @@ export default function LuxuryDentalExperience() {
 
         <section id="results" className="section results-section">
           <SectionHeading
-            eyebrow="Smile Transformations"
-            title="Interactive before and after storytelling"
-            description="A tactile comparison module gives patients an immediate sense of aesthetic progress and clinical polish."
+            eyebrow="Smile Results"
+            title="See the difference professional dental care can make"
+            description="Real treatment outcomes for whitening, alignment, and smile design—shown clearly so you can understand the kind of results we aim for."
           />
           <div className="results-grid">
             <BeforeAfterSlider />
             <div className="results-copy gsap-reveal">
-              <h3>Confidence is built visually and clinically.</h3>
+              <h3>Natural-looking results, planned with care.</h3>
               <p>
-                The transformation section is crafted to showcase whitening, alignment, and smile design results
-                with a premium comparison interaction that works smoothly on touch devices.
+                Every cosmetic or restorative treatment starts with an honest conversation about what will suit
+                your teeth, face, and budget. We focus on healthy, natural smiles—not exaggerated changes.
               </p>
               <div className="treatment-pills">
                 <span>Whitening</span>
@@ -713,21 +825,21 @@ export default function LuxuryDentalExperience() {
               <img
                 className="doctor-photo"
                 src="/images/Dr.ImgD.jpg"
-                alt="Dr. Dhanshree Ghuge (Sanap), Founder and Chief Dentist at Dr. Dhanshree's Dental Clinic"
+                alt={`${doctorName}, Founder and Chief Dentist at Dr. Dhanshree's Dental Clinic`}
                 loading="lazy"
                 decoding="async"
               />
               <div className="doctor-nameplate">
-                <strong>Dr. Dhanshree Ghuge (Sanap)</strong>
+                <strong>{doctorName}</strong>
                 <span>Founder & Chief Dentist</span>
               </div>
             </motion.div>
             <div className="doctor-copy gsap-reveal">
               <span className="eyebrow">Meet Your Dentist</span>
-              <h2>Cinematic care, precise treatment, and a smile-first philosophy.</h2>
+              <h2>Gentle care, precise treatment, and a smile-first philosophy.</h2>
               <p>
-                Dr. Dhanshree's approach combines advanced dental technology with gentle communication, helping
-                patients feel informed, comfortable, and confident before every treatment.
+                {doctorName} combines modern dental technology with clear, compassionate communication—helping
+                patients feel informed, comfortable, and confident before every procedure.
               </p>
               <div className="doctor-highlights">
                 {doctorHighlights.map((item) => (
@@ -741,60 +853,50 @@ export default function LuxuryDentalExperience() {
           </div>
         </section>
 
-        <section className="section testimonials-section">
+        <section id="reviews" className="section testimonials-section">
           <SectionHeading
-            eyebrow="Patient Stories"
-            title="Premium glass testimonials that move with quiet confidence"
-            description="Auto-sliding cards reinforce trust without overwhelming the visitor."
+            eyebrow="Google Reviews"
+            title="What Lohegaon patients say about us"
+            description="Real feedback from patients who visited our clinic for root canal, whitening, braces, and smile design treatments."
           />
-          <div className="testimonial-stage">
-            {testimonials.map((testimonial, index) => (
-              <motion.article
-                className="testimonial-card"
-                key={testimonial.name}
-                animate={{
-                  opacity: testimonialIndex === index ? 1 : 0,
-                  scale: testimonialIndex === index ? 1 : 0.95,
-                  y: testimonialIndex === index ? 0 : 20,
-                  pointerEvents: testimonialIndex === index ? "auto" : "none",
-                }}
-                transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-              >
-                <Quote size={42} />
+          <div className="reviews-grid">
+            {testimonials.map((testimonial) => (
+              <article className="review-card gsap-reveal" key={testimonial.name}>
+                <div className="review-card-top">
+                  <div className="review-avatar">{testimonial.name.charAt(0)}</div>
+                  <div>
+                    <strong>{testimonial.name}</strong>
+                    <span>{testimonial.treatment}</span>
+                  </div>
+                  <span className="google-badge">Google</span>
+                </div>
                 <div className="stars" aria-label="Five star rating">
                   {[...Array(5)].map((_, starIndex) => (
-                    <Star key={starIndex} size={18} fill="currentColor" />
+                    <Star key={starIndex} size={16} fill="currentColor" />
                   ))}
                 </div>
                 <p>{testimonial.text}</p>
-                <footer>
-                  <strong>{testimonial.name}</strong>
-                  <span>{testimonial.treatment}</span>
-                </footer>
-              </motion.article>
+              </article>
             ))}
           </div>
-          <div className="testimonial-dots" aria-label="Testimonial controls">
-            {testimonials.map((testimonial, index) => (
-              <button
-                key={testimonial.name}
-                type="button"
-                aria-label={`Show testimonial from ${testimonial.name}`}
-                className={testimonialIndex === index ? "active" : ""}
-                onClick={() => setTestimonialIndex(index)}
-              />
-            ))}
+          <div className="reviews-cta">
+            <MagneticButton href={googleReviewsUrl} variant="secondary">
+              Read All Google Reviews
+              <ExternalLink size={18} />
+            </MagneticButton>
           </div>
         </section>
+
+        <FaqSection />
 
         <section id="appointment" className="section appointment-section">
           <div className="appointment-shell">
             <div className="appointment-copy reveal">
               <span className="eyebrow">Book Your Visit</span>
-              <h2>Your new smile can start with a 30-second WhatsApp booking.</h2>
+              <h2>Book your dental visit in under a minute on WhatsApp.</h2>
               <p>
-                Choose your treatment, share your phone number, and the clinic team can confirm your appointment
-                quickly.
+                Share your name, phone number, and treatment. Our team will confirm your appointment quickly—often
+                the same day.
               </p>
               <div className="quick-actions">
                 <MagneticButton href={whatsappUrl()} variant="primary">
@@ -819,22 +921,24 @@ export default function LuxuryDentalExperience() {
         <div className="footer-grid">
           <div>
             <a className="brand footer-brand" href="#home">
-              <span className="brand-mark">D</span>
+              <span className="brand-mark">
+                <img src="/images/logo.jpeg" alt="" />
+              </span>
               <span>
-                <strong>Dr. Dhanshree</strong>
+                <strong>Dr. Dhanshree's</strong>
                 <small>Dental Clinic</small>
               </span>
             </a>
             <p>
-              Premium dental care in Lohegaon, Pune with modern treatment planning, hygienic workflow, and a
-              patient-first experience.
+              Trusted dental care in Lohegaon, Pune—modern treatments, hygienic workflow, and compassionate care
+              with {doctorName}.
             </p>
             <div className="socials">
-              <a href="https://www.instagram.com/drdhanshree_dentalclinic2025/" aria-label="Instagram">
+              <a href="https://www.instagram.com/drdhanshree_dentalclinic2025/" aria-label="Instagram" target="_blank" rel="noreferrer">
                 <span>Ig</span>
               </a>
-              <a href="https://facebook.com" aria-label="Facebook">
-                <span>Fb</span>
+              <a href={googleReviewsUrl} aria-label="Google Reviews" target="_blank" rel="noreferrer">
+                <span>Gr</span>
               </a>
               <a href={whatsappUrl()} aria-label="WhatsApp">
                 <MessageCircle size={18} />
@@ -879,7 +983,7 @@ export default function LuxuryDentalExperience() {
         </div>
         <div className="footer-bottom">
           <span>© 2026 Dr. Dhanshree's Dental Clinic. All rights reserved.</span>
-          <span>Premium dental care for beautiful smiles.</span>
+          <span>Lohegaon, Pune · Open 10 AM – 9 PM daily</span>
         </div>
       </footer>
 

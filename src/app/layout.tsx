@@ -15,7 +15,7 @@ const sora = Sora({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://drdhanshreedentalclinic.netlify.app"),
+  metadataBase: new URL("https://drdhanshreedentalclinic.vercel.app"),
   title: {
     default: "Dr. Dhanshree's Dental Clinic | Premium Dental Care in Lohegaon Pune",
     template: "%s | Dr. Dhanshree's Dental Clinic",
@@ -36,7 +36,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_IN",
-    url: "https://drdhanshreedentalclinic.netlify.app",
+    url: "https://drdhanshreedentalclinic.vercel.app",
     siteName: "Dr. Dhanshree's Dental Clinic",
     title: "Dr. Dhanshree's Dental Clinic | Premium Dental Care in Pune",
     description:

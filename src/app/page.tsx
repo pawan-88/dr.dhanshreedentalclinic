@@ -4,11 +4,11 @@ const clinicSchema = {
   "@context": "https://schema.org",
   "@type": "Dentist",
   name: "Dr. Dhanshree's Dental Clinic",
-  url: "https://drdhanshreedentalclinic.netlify.app/",
+  url: "https://drdhanshreedentalclinic.vercel.app",
   telephone: "+918275172931",
   email: "dr.dhanshreedentalclinic@gmail.com",
   priceRange: "$$",
-  image: "https://drdhanshreedentalclinic.netlify.app/og-image.svg",
+  image: "https://drdhanshreedentalclinic.vercel.app/og-image.svg",
   address: {
     "@type": "PostalAddress",
     streetAddress:
@@ -46,7 +46,10 @@ const clinicSchema = {
     "Orthodontics",
     "Teeth whitening",
   ],
-  sameAs: ["https://www.instagram.com/drdhanshree_dentalclinic2025/"],
+  sameAs: [
+    "https://www.instagram.com/drdhanshree_dentalclinic2025/",
+    "https://www.google.com/maps/place/Dr.+DHANSHREE%27S+Dental+Clinic/@18.6033058,73.9285482,17z",
+  ],
 };
 
 export default function HomePage() {
