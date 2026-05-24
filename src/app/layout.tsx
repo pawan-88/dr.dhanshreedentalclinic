@@ -60,6 +60,10 @@ export const metadata: Metadata = {
     index: true,
     follow: true,
   },
+  icons: {
+    icon: "/images/logo.jpeg",
+    apple: "/images/logo.jpeg",
+  },
 };
 
 export const viewport: Viewport = {

@@ -4,6 +4,37 @@ import { Canvas, useFrame } from "@react-three/fiber";
 import { Suspense, useMemo, useRef } from "react";
 import * as THREE from "three";
 
+function SmileArc() {
+  const group = useRef<THREE.Group>(null);
+  const teeth = useMemo(
+    () =>
+      Array.from({ length: 5 }, (_, index) => ({
+        x: (index - 2) * 0.42,
+        y: -0.95 + Math.abs(index - 2) * 0.08,
+        z: -0.35 + Math.abs(index - 2) * 0.05,
+        scale: index === 2 ? 0.22 : 0.17,
+      })),
+    [],
+  );
+
+  useFrame((state) => {
+    if (!group.current) return;
+    group.current.rotation.y = Math.sin(state.clock.elapsedTime * 0.45) * 0.08;
+    group.current.position.y = -0.15 + Math.sin(state.clock.elapsedTime * 0.9) * 0.04;
+  });
+
+  return (
+    <group ref={group} position={[0, -0.55, 0.15]}>
+      {teeth.map((tooth, index) => (
+        <mesh key={index} position={[tooth.x, tooth.y, tooth.z]} scale={tooth.scale}>
+          <capsuleGeometry args={[0.42, 0.55, 8, 16]} />
+          <meshPhysicalMaterial color="#ffffff" roughness={0.16} clearcoat={0.7} clearcoatRoughness={0.12} />
+        </mesh>
+      ))}
+    </group>
+  );
+}
+
 function ToothModel() {
   const group = useRef<THREE.Group>(null);
 
@@ -130,6 +161,7 @@ function SceneContent() {
     <group ref={rig}>
       <ParticleField />
       <ToothModel />
+      <SmileArc />
       <FloatingTool position={[-1.85, 0.45, -0.25]} rotation={[0.28, 0.1, -0.58]} color="#bfdbfe" speed={1.1} />
       <FloatingTool position={[1.88, -0.04, -0.35]} rotation={[-0.2, 0.1, 0.62]} color="#a5f3fc" speed={1.35} />
       <mesh position={[1.28, 1.28, -0.65]} rotation={[0.7, 0.3, 0.1]}>
@@ -148,7 +180,7 @@ export default function PremiumDentalScene() {
   return (
     <Canvas
       shadows
-      dpr={[1, 1.6]}
+      dpr={[1, 1.25]}
       camera={{ position: [0, 0.1, 5.1], fov: 38 }}
       gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
     >

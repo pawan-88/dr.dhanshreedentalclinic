@@ -1,211 +1,65 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import {
   ArrowRight,
-  Award,
   CalendarCheck,
   Check,
   ChevronDown,
   ChevronRight,
   Clock,
   ExternalLink,
-  Gem,
-  HeartPulse,
   MapPin,
   Menu,
   MessageCircle,
-  Microscope,
   Phone,
   ShieldCheck,
   Sparkles,
   Star,
-  Stethoscope,
-  Timer,
-  WandSparkles,
   X,
 } from "lucide-react";
-import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import Lenis from "lenis";
-import { FormEvent, ReactNode, useEffect, useMemo, useRef, useState } from "react";
+import { motion } from "framer-motion";
+import { FormEvent, useEffect, useRef, useState } from "react";
+import {
+  doctorHighlights,
+  doctorName,
+  faqs,
+  googleReviewsUrl,
+  navLinks,
+  phoneNumber,
+  services,
+  stats,
+  testimonials,
+  whatsappUrl,
+} from "@/lib/site-data";
+import { useMediaQuery } from "@/hooks/use-media-query";
+import { useScrollReveal } from "@/hooks/use-scroll-reveal";
 
-const phoneNumber = "+918275172931";
-const whatsappNumber = "918275172931";
-const doctorName = "Dr. Dhanshree Sanap (Ghuge)";
-const googleReviewsUrl =
-  "https://www.google.com/maps/place/Dr.+DHANSHREE%27S+Dental+Clinic/@18.6033058,73.9285482,17z/data=!4m8!3m7!1s0x3bc2c7a86d8f74af:0x6a9c3fab4620f1c3!8m2!3d18.6033058!4d73.9285482!9m1!1b1!16s%2Fg%2F11v0q8xq8x";
-const whatsappIntro =
-  "Hi Dr. Dhanshree's Dental Clinic, I would like to book an appointment.";
+const DentalScene = dynamic(() => import("./premium-dental-scene"), {
+  ssr: false,
+  loading: () => (
+    <div className="scene-loader" aria-label="Loading interactive dental scene">
+      <span />
+      <p>Preparing your smile preview</p>
+    </div>
+  ),
+});
 
-const navLinks = [
-  { label: "Home", href: "#home" },
-  { label: "Services", href: "#services" },
-  { label: "Why Us", href: "#why-us" },
-  { label: "Results", href: "#results" },
-  { label: "Reviews", href: "#reviews" },
-  { label: "Doctor", href: "#doctor" },
-  { label: "FAQ", href: "#faq" },
-  { label: "Contact", href: "#appointment" },
-];
-
-const services = [
-  {
-    title: "Dental Implants",
-    description: "Permanent tooth replacements planned digitally for a natural look, comfortable bite, and long-term confidence.",
-    icon: ShieldCheck,
-    accent: "#2563eb",
-    image: "/images/Dental-Implants.jpg",
-  },
-  {
-    title: "Teeth Whitening",
-    description: "Professional whitening that lifts stains safely and gives you a brighter smile in a single comfortable visit.",
-    icon: Sparkles,
-    accent: "#06b6d4",
-    image: "/images/teeth white.jpg",
-  },
-  {
-    title: "Root Canal",
-    description: "Gentle, pain-managed root canal treatment that saves your natural tooth and relieves infection quickly.",
-    icon: HeartPulse,
-    accent: "#6366f1",
-    image: "/images/root canel.jpg",
-  },
-  {
-    title: "Braces",
-    description: "Metal, ceramic, and clear aligner options for children and adults who want straighter, healthier teeth.",
-    icon: Stethoscope,
-    accent: "#14b8a6",
-    image: "/images/braces.jpg",
-  },
-  {
-    title: "Smile Design",
-    description: "Custom smile planning for shape, shade, and symmetry so your results look natural—not overdone.",
-    icon: WandSparkles,
-    accent: "#8b5cf6",
-    image: "/images/Veneers.jpg",
-  },
-  {
-    title: "Cosmetic Dentistry",
-    description: "Veneers, bonding, polishing, and contouring for a refined finish that suits your face and lifestyle.",
-    icon: Gem,
-    accent: "#0ea5e9",
-    image: "/images/Clear Aligners.jpg",
-  },
-];
-
-const stats = [
-  { value: 1000, suffix: "+", label: "Happy Patients", icon: Star },
-  { value: 6, suffix: "+", label: "Years Experience", icon: Award },
-  { value: 100, suffix: "%", label: "Advanced Equipment", icon: Microscope },
-  { value: 24, suffix: "h", label: "Fast WhatsApp Response", icon: Timer },
-];
-
-const testimonials = [
-  {
-    name: "Sneha Patil",
-    treatment: "Root Canal Treatment",
-    text: "I had severe tooth pain and was very nervous. Dr. Dhanshree explained every step clearly before starting. The root canal was painless, the clinic is spotless, and the follow-up care was excellent.",
-  },
-  {
-    name: "Amit Deshmukh",
-    treatment: "Dental Cleaning",
-    text: "Very professional clinic near Eastern Royale Society. Scaling was done gently, staff is polite, and WhatsApp appointment booking is quick and easy. Highly recommended in Lohegaon.",
-  },
-  {
-    name: "Pooja Kulkarni",
-    treatment: "Teeth Whitening",
-    text: "Got teeth whitening done here and noticed a visible difference after one session. The doctor is soft-spoken, caring, and the clinic feels modern, calm, and hygienic.",
-  },
-  {
-    name: "Vikram Shinde",
-    treatment: "Braces Consultation",
-    text: "Visited for my daughter's braces consultation. Dr. Sanap explained metal, ceramic, and aligner options with clear guidance and no pressure. Very transparent and patient-friendly.",
-  },
-  {
-    name: "Meera Joshi",
-    treatment: "Smile Design",
-    text: "Beautiful clinic with a reassuring atmosphere. My smile design looks natural, and the doctor checked on me after treatment. Truly patient-first dental care.",
-  },
-];
-
-const faqs = [
-  {
-    question: "Is root canal treatment painful?",
-    answer:
-      "Most patients feel little to no pain during treatment. We use modern anesthesia and gentle techniques, and Dr. Dhanshree explains each step before starting so you feel calm and informed.",
-  },
-  {
-    question: "How do I book an appointment?",
-    answer:
-      "The fastest way is WhatsApp. Tap Book Visit, share your name, phone number, and treatment, and our team will confirm your slot. You can also call us directly at +91 82751 72931.",
-  },
-  {
-    question: "What are your clinic timings?",
-    answer: "We are open Monday to Sunday, 10:00 AM to 9:00 PM, including weekends and most holidays.",
-  },
-  {
-    question: "Where is the clinic located?",
-    answer:
-      "Shop No. 2, Muktai Plaza, Wadgaon Shinde Road, opposite Eastern Royale Society, Pathare Wasti, Lohegaon, Pune 411047. Google Maps directions are available in the footer.",
-  },
-  {
-    question: "Do you treat children and families?",
-    answer:
-      "Yes. We offer gentle dental care for children and adults, including checkups, fillings, extractions, braces consultations, and preventive care for the whole family.",
-  },
-  {
-    question: "Can I get a treatment cost estimate before starting?",
-    answer:
-      "Yes. We believe in transparent guidance. After examination, we explain recommended options, expected outcomes, and estimated costs so you can decide comfortably.",
-  },
-];
-
-const doctorHighlights = [
-  "Founder & Chief Dentist with 6+ years of experience",
-  "Cosmetic, restorative, and preventive dentistry",
-  "Comfort-focused root canal and smile design care",
-  "Clear treatment planning for every patient",
-];
-
-function whatsappUrl(message = whatsappIntro) {
-  return `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
-}
-
-function MagneticButton({
+function CtaLink({
   children,
   href,
   variant = "primary",
   className = "",
 }: {
-  children: ReactNode;
+  children: React.ReactNode;
   href: string;
   variant?: "primary" | "secondary" | "ghost";
   className?: string;
 }) {
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
-  const springX = useSpring(x, { stiffness: 180, damping: 16, mass: 0.3 });
-  const springY = useSpring(y, { stiffness: 180, damping: 16, mass: 0.3 });
-
   return (
-    <motion.a
-      href={href}
-      className={`magnetic-btn ${variant} ${className}`}
-      style={{ x: springX, y: springY }}
-      onMouseMove={(event) => {
-        const rect = event.currentTarget.getBoundingClientRect();
-        x.set((event.clientX - rect.left - rect.width / 2) * 0.18);
-        y.set((event.clientY - rect.top - rect.height / 2) * 0.18);
-      }}
-      onMouseLeave={() => {
-        x.set(0);
-        y.set(0);
-      }}
-      whileTap={{ scale: 0.97 }}
-    >
+    <a href={href} className={`magnetic-btn ${variant} ${className}`}>
       {children}
-    </motion.a>
+    </a>
   );
 }
 
@@ -219,17 +73,11 @@ function SectionHeading({
   description: string;
 }) {
   return (
-    <motion.div
-      className="section-heading reveal"
-      initial={{ opacity: 0, y: 28 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-80px" }}
-      transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
-    >
+    <div className="section-heading scroll-reveal">
       <span className="eyebrow">{eyebrow}</span>
       <h2>{title}</h2>
       <p>{description}</p>
-    </motion.div>
+    </div>
   );
 }
 
@@ -325,7 +173,7 @@ function FaqSection() {
         {faqs.map((item, index) => {
           const isOpen = openIndex === index;
           return (
-            <article className={`faq-item gsap-reveal ${isOpen ? "open" : ""}`} key={item.question}>
+            <article className={`faq-item scroll-reveal ${isOpen ? "open" : ""}`} key={item.question}>
               <button
                 type="button"
                 aria-expanded={isOpen}
@@ -418,89 +266,12 @@ export default function LuxuryDentalExperience() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
   const [scrollProgress, setScrollProgress] = useState(0);
-  const shellRef = useRef<HTMLDivElement>(null);
-  const heroX = useMotionValue(0);
-  const heroY = useMotionValue(0);
-  const parallaxX = useTransform(heroX, [-1, 1], [-18, 18]);
-  const parallaxY = useTransform(heroY, [-1, 1], [18, -18]);
+  const [heroTilt, setHeroTilt] = useState({ x: 0, y: 0 });
+  const reducedMotion = useMediaQuery("(prefers-reduced-motion: reduce)");
+  const finePointer = useMediaQuery("(pointer: fine)");
+  const show3DScene = useMediaQuery("(min-width: 768px)") && !reducedMotion;
 
-  const reducedMotion = useMemo(
-    () =>
-      typeof window !== "undefined" &&
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches,
-    [],
-  );
-
-  useEffect(() => {
-    if (reducedMotion) return;
-
-    gsap.registerPlugin(ScrollTrigger);
-
-    const lenis = new Lenis({
-      lerp: 0.09,
-      wheelMultiplier: 0.85,
-      touchMultiplier: 1.2,
-    });
-
-    lenis.on("scroll", ScrollTrigger.update);
-
-    let frame = 0;
-    const raf = (time: number) => {
-      lenis.raf(time);
-      frame = requestAnimationFrame(raf);
-    };
-
-    frame = requestAnimationFrame(raf);
-    ScrollTrigger.refresh();
-
-    return () => {
-      cancelAnimationFrame(frame);
-      lenis.destroy();
-    };
-  }, [reducedMotion]);
-
-  useEffect(() => {
-    gsap.registerPlugin(ScrollTrigger);
-
-    const revealItems = gsap.utils.toArray<HTMLElement>(".gsap-reveal");
-    revealItems.forEach((item) => {
-      gsap.fromTo(
-        item,
-        { autoAlpha: 0, y: 48, scale: 0.98 },
-        {
-          autoAlpha: 1,
-          y: 0,
-          scale: 1,
-          duration: 0.9,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: item,
-            start: "top 86%",
-          },
-        },
-      );
-    });
-
-    const parallaxItems = gsap.utils.toArray<HTMLElement>("[data-parallax]");
-    parallaxItems.forEach((item) => {
-      gsap.to(item, {
-        yPercent: Number(item.dataset.parallax) || -8,
-        ease: "none",
-        scrollTrigger: {
-          trigger: item,
-          start: "top bottom",
-          end: "bottom top",
-          scrub: 1,
-        },
-      });
-    });
-
-    ScrollTrigger.refresh();
-
-    return () => {
-      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
-    };
-  }, []);
+  useScrollReveal(reducedMotion);
 
   useEffect(() => {
     const sections = navLinks
@@ -533,24 +304,27 @@ export default function LuxuryDentalExperience() {
 
   return (
     <div
-      ref={shellRef}
       className="luxury-site"
-      onPointerMove={(event) => {
-        const rect = event.currentTarget.getBoundingClientRect();
-        const x = (event.clientX - rect.left) / rect.width;
-        const y = (event.clientY - rect.top) / rect.height;
-        event.currentTarget.style.setProperty("--cursor-x", `${x * 100}%`);
-        event.currentTarget.style.setProperty("--cursor-y", `${y * 100}%`);
-      }}
+      onPointerMove={
+        finePointer
+          ? (event) => {
+              const rect = event.currentTarget.getBoundingClientRect();
+              const x = (event.clientX - rect.left) / rect.width;
+              const y = (event.clientY - rect.top) / rect.height;
+              event.currentTarget.style.setProperty("--cursor-x", `${x * 100}%`);
+              event.currentTarget.style.setProperty("--cursor-y", `${y * 100}%`);
+            }
+          : undefined
+      }
     >
       <div className="noise-layer" aria-hidden="true" />
-      <div className="cursor-aura" aria-hidden="true" />
+      {finePointer ? <div className="cursor-aura" aria-hidden="true" /> : null}
       <div className="scroll-progress" style={{ transform: `scaleX(${scrollProgress})` }} />
 
       <header className="floating-nav">
         <a className="brand" href="#home" aria-label="Dr. Dhanshree's Dental Clinic home">
           <span className="brand-mark">
-            <img src="/images/logo.jpeg" alt="" />
+            <img src="/images/logo.jpeg" alt="" width={40} height={40} decoding="async" />
           </span>
           <span>
             <strong>Dr. Dhanshree's</strong>
@@ -570,9 +344,9 @@ export default function LuxuryDentalExperience() {
           ))}
         </nav>
 
-        <MagneticButton href={whatsappUrl()} variant="primary" className="nav-cta">
+        <CtaLink href={whatsappUrl()} variant="primary" className="nav-cta">
           Book Visit
-        </MagneticButton>
+        </CtaLink>
 
         <button
           className="mobile-menu-trigger"
@@ -610,15 +384,29 @@ export default function LuxuryDentalExperience() {
         <section
           id="home"
           className="hero-section"
-          onPointerMove={(event) => {
-            const rect = event.currentTarget.getBoundingClientRect();
-            heroX.set(((event.clientX - rect.left) / rect.width - 0.5) * 2);
-            heroY.set(((event.clientY - rect.top) / rect.height - 0.5) * 2);
-          }}
+          onPointerMove={
+            finePointer
+              ? (event) => {
+                  const rect = event.currentTarget.getBoundingClientRect();
+                  setHeroTilt({
+                    x: (event.clientX - rect.left) / rect.width - 0.5,
+                    y: (event.clientY - rect.top) / rect.height - 0.5,
+                  });
+                }
+              : undefined
+          }
         >
           <div className="hero-gradient" aria-hidden="true" />
-          <motion.div className="hero-orb orb-one" style={{ x: parallaxX, y: parallaxY }} />
-          <motion.div className="hero-orb orb-two" style={{ x: parallaxY, y: parallaxX }} />
+          <div
+            className="hero-orb orb-one"
+            style={{ transform: `translate(${heroTilt.x * 18}px, ${heroTilt.y * -18}px)` }}
+            aria-hidden="true"
+          />
+          <div
+            className="hero-orb orb-two"
+            style={{ transform: `translate(${heroTilt.y * 18}px, ${heroTilt.x * -18}px)` }}
+            aria-hidden="true"
+          />
 
           <div className="hero-grid">
             <motion.div
@@ -640,14 +428,14 @@ export default function LuxuryDentalExperience() {
                 checkups and root canals to smile design and cosmetic dentistry.
               </p>
               <div className="hero-actions">
-                <MagneticButton href={whatsappUrl()} variant="primary">
+                <CtaLink href={whatsappUrl()} variant="primary">
                   Book Appointment
                   <CalendarCheck size={18} />
-                </MagneticButton>
-                <MagneticButton href={googleReviewsUrl} variant="secondary">
+                </CtaLink>
+                <CtaLink href={googleReviewsUrl} variant="secondary">
                   Read Google Reviews
                   <ExternalLink size={18} />
-                </MagneticButton>
+                </CtaLink>
               </div>
               <div className="hero-trust-row">
                 <a className="rating-card google-rating-card" href={googleReviewsUrl} target="_blank" rel="noreferrer">
@@ -676,19 +464,14 @@ export default function LuxuryDentalExperience() {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               transition={{ duration: 1, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
             >
-              <div className="scene-shell clinic-photo-shell">
-                <img
-                  className="clinic-hero-photo"
-                  src="/images/page.jpg"
-                  alt="Clean and modern dental clinic interior at Dr. Dhanshree's Dental Clinic, Lohegaon"
-                />
-                <div className="doctor-hero-card">
-                  <img src="/images/Dr.ImgD.jpg" alt={doctorName} />
-                  <div>
-                    <strong>{doctorName}</strong>
-                    <span>Founder & Chief Dentist</span>
+              <div className="scene-shell">
+                {show3DScene ? (
+                  <DentalScene />
+                ) : (
+                  <div className="scene-fallback" aria-hidden="true">
+                    <div className="scene-fallback-tooth" />
                   </div>
-                </div>
+                )}
               </div>
               <motion.div
                 className="floating-badge top"
@@ -696,7 +479,7 @@ export default function LuxuryDentalExperience() {
                 transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
               >
                 <ShieldCheck size={18} />
-                Hygienic Modern Clinic
+                Painless Care
               </motion.div>
               <motion.div
                 className="floating-badge bottom"
@@ -704,14 +487,14 @@ export default function LuxuryDentalExperience() {
                 transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut" }}
               >
                 <Sparkles size={18} />
-                Same-Day Appointments
+                Smile Design Ready
               </motion.div>
             </motion.div>
           </div>
         </section>
 
         <section id="services" className="section services-section">
-          <div className="section-blob blob-left" data-parallax="-10" />
+          <div className="section-blob blob-left" aria-hidden="true" />
           <SectionHeading
             eyebrow="Our Treatments"
             title="Complete dental care for every stage of your smile"
@@ -721,15 +504,20 @@ export default function LuxuryDentalExperience() {
             {services.map((service, index) => {
               const Icon = service.icon;
               return (
-                <motion.article
-                  className="service-card gsap-reveal"
+                <article
+                  className="service-card scroll-reveal"
                   key={service.title}
                   style={{ "--accent": service.accent } as React.CSSProperties}
-                  whileHover={{ y: -10 }}
-                  transition={{ type: "spring", stiffness: 260, damping: 18 }}
                 >
                   <div className="service-photo">
-                    <img src={service.image} alt={`${service.title} at Dr. Dhanshree's Dental Clinic`} loading="lazy" />
+                    <img
+                      src={service.image}
+                      alt={`${service.title} at Dr. Dhanshree's Dental Clinic`}
+                      loading="lazy"
+                      decoding="async"
+                      width={640}
+                      height={360}
+                    />
                   </div>
                   <span className="service-index">0{index + 1}</span>
                   <div className="service-icon">
@@ -741,7 +529,7 @@ export default function LuxuryDentalExperience() {
                     Book {service.title}
                     <ArrowRight size={16} />
                   </a>
-                </motion.article>
+                </article>
               );
             })}
           </div>
@@ -775,7 +563,7 @@ export default function LuxuryDentalExperience() {
               {stats.map((stat) => {
                 const Icon = stat.icon;
                 return (
-                  <div className="stat-card gsap-reveal" key={stat.label}>
+                  <div className="stat-card scroll-reveal" key={stat.label}>
                     <Icon size={22} />
                     <strong>
                       <AnimatedCounter value={stat.value} suffix={stat.suffix} />
@@ -796,7 +584,7 @@ export default function LuxuryDentalExperience() {
           />
           <div className="results-grid">
             <BeforeAfterSlider />
-            <div className="results-copy gsap-reveal">
+            <div className="results-copy scroll-reveal">
               <h3>Natural-looking results, planned with care.</h3>
               <p>
                 Every cosmetic or restorative treatment starts with an honest conversation about what will suit
@@ -814,13 +602,7 @@ export default function LuxuryDentalExperience() {
 
         <section id="doctor" className="section doctor-section">
           <div className="doctor-card">
-            <motion.div
-              className="doctor-portrait reveal"
-              initial={{ clipPath: "inset(18% 18% 18% 18% round 32px)", opacity: 0 }}
-              whileInView={{ clipPath: "inset(0% 0% 0% 0% round 32px)", opacity: 1 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
-            >
+            <div className="doctor-portrait scroll-reveal">
               <div className="portrait-glow" />
               <img
                 className="doctor-photo"
@@ -833,8 +615,8 @@ export default function LuxuryDentalExperience() {
                 <strong>{doctorName}</strong>
                 <span>Founder & Chief Dentist</span>
               </div>
-            </motion.div>
-            <div className="doctor-copy gsap-reveal">
+            </div>
+            <div className="doctor-copy scroll-reveal">
               <span className="eyebrow">Meet Your Dentist</span>
               <h2>Gentle care, precise treatment, and a smile-first philosophy.</h2>
               <p>
@@ -861,7 +643,7 @@ export default function LuxuryDentalExperience() {
           />
           <div className="reviews-grid">
             {testimonials.map((testimonial) => (
-              <article className="review-card gsap-reveal" key={testimonial.name}>
+              <article className="review-card scroll-reveal" key={testimonial.name}>
                 <div className="review-card-top">
                   <div className="review-avatar">{testimonial.name.charAt(0)}</div>
                   <div>
@@ -880,10 +662,10 @@ export default function LuxuryDentalExperience() {
             ))}
           </div>
           <div className="reviews-cta">
-            <MagneticButton href={googleReviewsUrl} variant="secondary">
+            <CtaLink href={googleReviewsUrl} variant="secondary">
               Read All Google Reviews
               <ExternalLink size={18} />
-            </MagneticButton>
+            </CtaLink>
           </div>
         </section>
 
@@ -899,17 +681,17 @@ export default function LuxuryDentalExperience() {
                 the same day.
               </p>
               <div className="quick-actions">
-                <MagneticButton href={whatsappUrl()} variant="primary">
+                <CtaLink href={whatsappUrl()} variant="primary">
                   WhatsApp Now
                   <MessageCircle size={18} />
-                </MagneticButton>
-                <MagneticButton href={`tel:${phoneNumber}`} variant="ghost">
+                </CtaLink>
+                <CtaLink href={`tel:${phoneNumber}`} variant="ghost">
                   Call Now
                   <Phone size={18} />
-                </MagneticButton>
+                </CtaLink>
               </div>
             </div>
-            <div className="form-card gsap-reveal">
+            <div className="form-card scroll-reveal">
               <AppointmentForm />
             </div>
           </div>
@@ -922,7 +704,7 @@ export default function LuxuryDentalExperience() {
           <div>
             <a className="brand footer-brand" href="#home">
               <span className="brand-mark">
-                <img src="/images/logo.jpeg" alt="" />
+                <img src="/images/logo.jpeg" alt="" width={40} height={40} decoding="async" />
               </span>
               <span>
                 <strong>Dr. Dhanshree's</strong>

@@ -1,14 +1,15 @@
-import LuxuryDentalExperience from "../components/luxury-dental-experience";
+import ClinicHomeClient from "@/components/clinic-home-client";
+import { siteUrl } from "@/lib/site-data";
 
 const clinicSchema = {
   "@context": "https://schema.org",
   "@type": "Dentist",
   name: "Dr. Dhanshree's Dental Clinic",
-  url: "https://drdhanshreedentalclinic.vercel.app",
+  url: siteUrl,
   telephone: "+918275172931",
   email: "dr.dhanshreedentalclinic@gmail.com",
   priceRange: "$$",
-  image: "https://drdhanshreedentalclinic.vercel.app/og-image.svg",
+  image: `${siteUrl}/og-image.svg`,
   address: {
     "@type": "PostalAddress",
     streetAddress:
@@ -59,7 +60,7 @@ export default function HomePage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(clinicSchema) }}
       />
-      <LuxuryDentalExperience />
+      <ClinicHomeClient />
     </>
   );
 }

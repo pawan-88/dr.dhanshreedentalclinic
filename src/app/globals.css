@@ -426,7 +426,7 @@ h3 {
 .comparison-card,
 .results-copy,
 .doctor-card,
-.testimonial-card,
+.review-card,
 .form-card,
 .appointment-shell {
   border: 1px solid rgba(255, 255, 255, 0.72);
@@ -788,41 +788,6 @@ h3 {
     linear-gradient(135deg, #eff6ff, #ffffff 45%, #ccfbf1);
 }
 
-.smile-art {
-  position: relative;
-  display: grid;
-  width: min(78%, 420px);
-  aspect-ratio: 1.25;
-  place-items: center;
-  border-radius: 42px;
-  background:
-    radial-gradient(ellipse at 50% 72%, rgba(15, 23, 42, 0.1), transparent 27%),
-    linear-gradient(145deg, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.18));
-  box-shadow: inset 0 0 55px rgba(15, 23, 42, 0.08);
-}
-
-.smile-art span {
-  width: 68%;
-  height: 30%;
-  border: 22px solid rgba(148, 163, 184, 0.45);
-  border-top: 0;
-  border-radius: 0 0 999px 999px;
-  transform: translateY(8px);
-}
-
-.smile-art.polished span {
-  border-color: rgba(255, 255, 255, 0.95);
-  box-shadow: 0 0 35px rgba(6, 182, 212, 0.38);
-}
-
-.smile-art strong {
-  position: absolute;
-  left: 24px;
-  top: 20px;
-  color: #1e3a8a;
-  font-family: var(--font-sora), sans-serif;
-}
-
 .comparison-handle {
   position: absolute;
   top: 0;
@@ -984,71 +949,6 @@ h3 {
   border: 1px solid var(--line);
   border-radius: 18px;
   background: rgba(255, 255, 255, 0.56);
-}
-
-.testimonial-stage {
-  position: relative;
-  min-height: 360px;
-  width: min(820px, 100%);
-  margin: 0 auto;
-}
-
-.testimonial-card {
-  position: absolute;
-  inset: 0;
-  display: grid;
-  align-content: center;
-  padding: clamp(26px, 5vw, 54px);
-  border-radius: 40px;
-  text-align: center;
-}
-
-.testimonial-card > svg {
-  margin: 0 auto 16px;
-  color: rgba(37, 99, 235, 0.24);
-}
-
-.testimonial-card .stars {
-  justify-content: center;
-}
-
-.testimonial-card p {
-  max-width: 650px;
-  margin: 20px auto;
-  color: #334155;
-  font-size: clamp(1.1rem, 2vw, 1.4rem);
-  line-height: 1.75;
-}
-
-.testimonial-card footer strong,
-.testimonial-card footer span {
-  display: block;
-}
-
-.testimonial-card footer span {
-  margin-top: 5px;
-  color: var(--muted);
-}
-
-.testimonial-dots {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  margin-top: 24px;
-}
-
-.testimonial-dots button {
-  width: 10px;
-  height: 10px;
-  border: 0;
-  border-radius: 999px;
-  background: rgba(37, 99, 235, 0.22);
-  transition: width 0.25s ease, background 0.25s ease;
-}
-
-.testimonial-dots button.active {
-  width: 34px;
-  background: linear-gradient(90deg, var(--blue), var(--cyan));
 }
 
 .appointment-section {
@@ -1287,48 +1187,44 @@ h3 {
   box-shadow: 0 18px 40px rgba(37, 99, 235, 0.16);
 }
 
-.clinic-photo-shell {
-  padding: 0;
-  background: #eef6ff;
+.scroll-reveal {
+  opacity: 0;
+  transform: translate3d(0, 2rem, 0) scale(0.98);
+  transition:
+    opacity 0.65s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.clinic-hero-photo {
-  width: 100%;
+.scroll-reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+.scene-fallback {
+  display: grid;
   height: 100%;
-  object-fit: cover;
+  place-items: center;
 }
 
-.doctor-hero-card {
-  position: absolute;
-  right: 18px;
-  bottom: 18px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 12px 14px;
-  border: 1px solid rgba(255, 255, 255, 0.78);
-  border-radius: 20px;
-  background: rgba(255, 255, 255, 0.88);
-  backdrop-filter: blur(16px);
-  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.14);
+.scene-fallback-tooth {
+  width: min(220px, 52vw);
+  aspect-ratio: 0.72;
+  border-radius: 42% 42% 36% 36%;
+  background: linear-gradient(160deg, #ffffff 0%, #dbeafe 55%, #cffafe 100%);
+  box-shadow:
+    0 28px 70px rgba(37, 99, 235, 0.22),
+    inset 0 -12px 24px rgba(37, 99, 235, 0.08);
+  animation: toothFloat 4.5s ease-in-out infinite;
 }
 
-.doctor-hero-card img {
-  width: 56px;
-  height: 56px;
-  border-radius: 16px;
-  object-fit: cover;
-}
-
-.doctor-hero-card strong,
-.doctor-hero-card span {
-  display: block;
-}
-
-.doctor-hero-card span {
-  margin-top: 4px;
-  color: var(--muted);
-  font-size: 0.82rem;
+@keyframes toothFloat {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-12px) rotate(2deg);
+  }
 }
 
 .service-photo {
@@ -1640,10 +1536,6 @@ h3 {
     min-height: 420px;
   }
 
-  .testimonial-stage {
-    min-height: 420px;
-  }
-
   .floating-actions {
     right: 14px;
     bottom: 14px;
@@ -1658,5 +1550,10 @@ h3 {
     animation-duration: 0.001ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.001ms !important;
+  }
+
+  .scroll-reveal {
+    opacity: 1;
+    transform: none;
   }
 }
