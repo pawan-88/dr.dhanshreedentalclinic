@@ -1,6 +1,5 @@
 "use client";
 
-import dynamic from "next/dynamic";
 import {
   ArrowRight,
   CalendarCheck,
@@ -34,16 +33,6 @@ import {
 } from "@/lib/site-data";
 import { useMediaQuery } from "@/hooks/use-media-query";
 import { useScrollReveal } from "@/hooks/use-scroll-reveal";
-
-const DentalScene = dynamic(() => import("./premium-dental-scene"), {
-  ssr: false,
-  loading: () => (
-    <div className="scene-loader" aria-label="Loading interactive dental scene">
-      <span />
-      <p>Preparing your smile preview</p>
-    </div>
-  ),
-});
 
 const marqueeItems = [
   "Smile Design",
@@ -202,12 +191,12 @@ function FaqSection() {
           description="Quick answers to the questions Lohegaon patients ask us most often about treatments, timings, and booking."
           center
         />
-        <div className="faq-list">
+        <div className="faq-list scroll-reveal">
           {faqs.map((item, index) => {
             const isOpen = openIndex === index;
             return (
               <article
-                className={`faq-item scroll-reveal ${isOpen ? "open" : ""}`}
+                className={`faq-item ${isOpen ? "open" : ""}`}
                 key={item.question}
               >
                 <button
@@ -305,10 +294,9 @@ function AppointmentForm() {
 export default function LuxuryDentalExperience() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
-  const [scrollProgress, setScrollProgress] = useState(0);
+  const progressRef = useRef<HTMLDivElement>(null);
   const reducedMotion = useMediaQuery("(prefers-reduced-motion: reduce)");
   const finePointer = useMediaQuery("(pointer: fine)");
-  const show3DScene = useMediaQuery("(min-width: 768px)") && !reducedMotion;
 
   useScrollReveal(reducedMotion);
 
@@ -327,17 +315,29 @@ export default function LuxuryDentalExperience() {
 
     sections.forEach((section) => observer.observe(section));
 
+    let ticking = false;
+
     const updateProgress = () => {
+      ticking = false;
+      const node = progressRef.current;
+      if (!node) return;
       const scrollable = document.documentElement.scrollHeight - window.innerHeight;
-      setScrollProgress(scrollable > 0 ? window.scrollY / scrollable : 0);
+      const progress = scrollable > 0 ? window.scrollY / scrollable : 0;
+      node.style.transform = `scaleX(${progress})`;
+    };
+
+    const onScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(updateProgress);
     };
 
     updateProgress();
-    window.addEventListener("scroll", updateProgress, { passive: true });
+    window.addEventListener("scroll", onScroll, { passive: true });
 
     return () => {
       observer.disconnect();
-      window.removeEventListener("scroll", updateProgress);
+      window.removeEventListener("scroll", onScroll);
     };
   }, []);
 
@@ -361,7 +361,7 @@ export default function LuxuryDentalExperience() {
       <div className="aurora aurora-c" aria-hidden="true" />
       <div className="grain-layer" aria-hidden="true" />
       {finePointer ? <div className="cursor-aura" aria-hidden="true" /> : null}
-      <div className="scroll-progress" style={{ transform: `scaleX(${scrollProgress})` }} />
+      <div ref={progressRef} className="scroll-progress" style={{ transform: "scaleX(0)" }} />
 
       <header className="floating-nav">
         <a className="brand" href="#home" aria-label="Dr. Dhanshree's Dental Clinic home">
@@ -500,13 +500,75 @@ export default function LuxuryDentalExperience() {
               transition={{ duration: 1, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
             >
               <div className="scene-shell">
-                {show3DScene ? (
-                  <DentalScene />
-                ) : (
-                  <div className="scene-fallback" aria-hidden="true">
-                    <div className="scene-fallback-tooth" />
-                  </div>
-                )}
+                <div className="scene-fallback" aria-hidden="true">
+                    <span className="fallback-halo" />
+                    <span className="fallback-ring ring-gold" />
+                    <span className="fallback-ring ring-cyan" />
+                    <span className="fallback-orbit">
+                      <i />
+                    </span>
+                    <span className="fallback-orbit orbit-reverse">
+                      <i />
+                    </span>
+                    <svg
+                      className="scene-fallback-tooth"
+                      viewBox="0 0 200 230"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <defs>
+                        <linearGradient id="toothBody" x1="60" y1="20" x2="150" y2="210" gradientUnits="userSpaceOnUse">
+                          <stop offset="0" stopColor="#ffffff" />
+                          <stop offset="0.45" stopColor="#eef6fc" />
+                          <stop offset="0.78" stopColor="#cfe1f0" />
+                          <stop offset="1" stopColor="#a9c8e2" />
+                        </linearGradient>
+                        <radialGradient id="toothShine" cx="0.36" cy="0.24" r="0.5">
+                          <stop offset="0" stopColor="#ffffff" stopOpacity="0.95" />
+                          <stop offset="1" stopColor="#ffffff" stopOpacity="0" />
+                        </radialGradient>
+                        <linearGradient id="toothGold" x1="150" y1="120" x2="110" y2="60" gradientUnits="userSpaceOnUse">
+                          <stop offset="0" stopColor="#e7c873" stopOpacity="0.5" />
+                          <stop offset="1" stopColor="#e7c873" stopOpacity="0" />
+                        </linearGradient>
+                      </defs>
+                      <path
+                        d="M100 12C58 12 30 40 30 82c0 30 13 48 21 76 6 21 10 52 25 52 14 0 13-34 20-58 3-11 11-11 14 0 7 24 6 58 20 58 15 0 19-31 25-52 8-28 21-46 21-76 0-42-28-70-70-70Z"
+                        fill="url(#toothBody)"
+                        stroke="rgba(103, 232, 249, 0.28)"
+                        strokeWidth="1.5"
+                      />
+                      <path
+                        d="M100 12C58 12 30 40 30 82c0 30 13 48 21 76 6 21 10 52 25 52 14 0 13-34 20-58 3-11 11-11 14 0 7 24 6 58 20 58 15 0 19-31 25-52 8-28 21-46 21-76 0-42-28-70-70-70Z"
+                        fill="url(#toothGold)"
+                      />
+                      <path
+                        d="M62 46q38-20 76 0"
+                        stroke="#b9d2e8"
+                        strokeWidth="4"
+                        strokeLinecap="round"
+                        opacity="0.5"
+                      />
+                      <path
+                        d="M100 118v34"
+                        stroke="#b9d2e8"
+                        strokeWidth="4"
+                        strokeLinecap="round"
+                        opacity="0.45"
+                      />
+                      <ellipse cx="72" cy="58" rx="26" ry="34" fill="url(#toothShine)" />
+                      <path
+                        d="M56 34c-10 8-16 20-17 32"
+                        stroke="#ffffff"
+                        strokeWidth="6"
+                        strokeLinecap="round"
+                        opacity="0.85"
+                      />
+                    </svg>
+                    <span className="fallback-spark spark-1" />
+                    <span className="fallback-spark spark-2" />
+                    <span className="fallback-spark spark-3" />
+                </div>
               </div>
               <motion.div
                 className="floating-badge top"
