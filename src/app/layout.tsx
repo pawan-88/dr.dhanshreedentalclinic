@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, Sora } from "next/font/google";
+import { Fraunces, Inter } from "next/font/google";
 import "./globals.css";
 
 const inter = Inter({
@@ -8,29 +8,45 @@ const inter = Inter({
   display: "swap",
 });
 
-const sora = Sora({
+const fraunces = Fraunces({
   subsets: ["latin"],
-  variable: "--font-sora",
+  variable: "--font-fraunces",
   display: "swap",
+  style: ["normal", "italic"],
+  axes: ["opsz"],
 });
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://drdhanshreedentalclinic.vercel.app"),
+  alternates: {
+    canonical: "/",
+  },
   title: {
-    default: "Dr. Dhanshree's Dental Clinic | Premium Dental Care in Lohegaon Pune",
+    default:
+      "Dr. Dhanshree's Dental Clinic | Best Dentist in Lohegaon, Pune – Implants, Braces & Smile Design",
     template: "%s | Dr. Dhanshree's Dental Clinic",
   },
   description:
-    "Premium dental treatments in Lohegaon, Pune with advanced technology, expert doctors, painless care, implants, braces, smile design, and cosmetic dentistry.",
+    "Trusted dental clinic in Lohegaon, Pune (Wadgaon Shinde Road). Painless root canal, dental implants, braces, teeth whitening & smile design by Dr. Dhanshree Sanap. Open 10 AM–9 PM daily. Book on WhatsApp: +91 82751 72931.",
   keywords: [
     "Dental clinic in Lohegaon",
+    "Best dentist in Lohegaon Pune",
+    "Dentist near me Lohegaon",
     "Dentist in Pune",
     "Dr Dhanshree Dental Clinic",
+    "Dental clinic Wadgaon Shinde Road",
+    "Dental clinic Pathare Wasti",
     "Dental implants Pune",
-    "Root canal Pune",
+    "Root canal treatment Lohegaon",
+    "Painless root canal Pune",
     "Teeth whitening Pune",
+    "Braces and aligners Pune",
+    "Clear aligners Lohegaon",
     "Smile design Pune",
+    "Cosmetic dentist Pune",
+    "Kids dentist Lohegaon",
   ],
+  category: "healthcare",
   authors: [{ name: "Dr. Dhanshree's Dental Clinic" }],
   creator: "Dr. Dhanshree's Dental Clinic",
   openGraph: {
@@ -38,23 +54,22 @@ export const metadata: Metadata = {
     locale: "en_IN",
     url: "https://drdhanshreedentalclinic.vercel.app",
     siteName: "Dr. Dhanshree's Dental Clinic",
-    title: "Dr. Dhanshree's Dental Clinic | Premium Dental Care in Pune",
+    title: "Dr. Dhanshree's Dental Clinic | Best Dentist in Lohegaon, Pune",
     description:
-      "A modern dental clinic experience for implants, root canal, braces, whitening, and smile design in Lohegaon, Pune.",
+      "Painless root canal, implants, braces, whitening & smile design in Lohegaon, Pune. Open 10 AM–9 PM daily. Book on WhatsApp.",
     images: [
       {
-        url: "/og-image.svg",
-        width: 1200,
-        height: 630,
-        alt: "Dr. Dhanshree's Dental Clinic premium dental care",
+        url: "/images/logo.jpeg",
+        alt: "Dr. Dhanshree's Dental Clinic — dental care in Lohegaon, Pune",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Dr. Dhanshree's Dental Clinic",
-    description: "Premium advanced dental care in Lohegaon, Pune.",
-    images: ["/og-image.svg"],
+    title: "Dr. Dhanshree's Dental Clinic | Dentist in Lohegaon, Pune",
+    description:
+      "Painless root canal, implants, braces, whitening & smile design. Open 10 AM–9 PM daily.",
+    images: ["/images/logo.jpeg"],
   },
   robots: {
     index: true,
@@ -70,7 +85,7 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   maximumScale: 5,
-  themeColor: "#2563eb",
+  themeColor: "#04060e",
 };
 
 export default function RootLayout({
@@ -79,7 +94,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en-IN" className={`${inter.variable} ${sora.variable}`}>
+    <html lang="en-IN" className={`${inter.variable} ${fraunces.variable}`}>
       <body>{children}</body>
     </html>
   );

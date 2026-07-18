@@ -1,6 +1,7 @@
 {
   "short_name": "Dr. Dhanshree",
   "name": "Dr. Dhanshree's Dental Clinic",
+  "description": "Trusted dental clinic in Lohegaon, Pune — implants, root canal, braces, whitening & smile design.",
   "icons": [
     {
       "src": "/images/logo.jpeg",
@@ -10,6 +11,6 @@
   ],
   "start_url": "/",
   "display": "standalone",
-  "theme_color": "#2563eb",
-  "background_color": "#f8fafc"
+  "theme_color": "#04060e",
+  "background_color": "#04060e"
 }

@@ -18,6 +18,8 @@ export const doctorName = "Dr. Dhanshree Sanap (Ghuge)";
 export const siteUrl = "https://drdhanshreedentalclinic.vercel.app";
 export const googleReviewsUrl =
   "https://www.google.com/maps/place/Dr.+DHANSHREE%27S+Dental+Clinic/@18.6033058,73.9285482,17z/data=!4m8!3m7!1s0x3bc2c7a86d8f74af:0x6a9c3fab4620f1c3!8m2!3d18.6033058!4d73.9285482!9m1!1b1!16s%2Fg%2F11v0q8xq8x";
+export const googleMapsEmbedUrl =
+  "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3780.171178219932!2d73.9285482!3d18.6033058!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc2c7a86d8f74af%3A0x6a9c3fab4620f1c3!2sDr.%20DHANSHREE'S%20Dental%20Clinic!5e0!3m2!1sen!2sin!4v1720606359574!5m2!1sen!2sin";
 export const whatsappIntro =
   "Hi Dr. Dhanshree's Dental Clinic, I would like to book an appointment.";
 
@@ -30,7 +32,7 @@ export const navLinks = [
   { label: "Services", href: "#services" },
   { label: "Why Us", href: "#why-us" },
   { label: "Results", href: "#results" },
-  { label: "Reviews", href: "#reviews" },
+  { label: "Location", href: "#reviews" },
   { label: "Doctor", href: "#doctor" },
   { label: "FAQ", href: "#faq" },
   { label: "Contact", href: "#appointment" },
@@ -100,34 +102,6 @@ export const stats = [
   { value: 6, suffix: "+", label: "Years Experience", icon: Award },
   { value: 100, suffix: "%", label: "Advanced Equipment", icon: Microscope },
   { value: 24, suffix: "h", label: "Fast WhatsApp Response", icon: Timer },
-] as const;
-
-export const testimonials = [
-  {
-    name: "Sneha Patil",
-    treatment: "Root Canal Treatment",
-    text: "I had severe tooth pain and was very nervous. Dr. Dhanshree explained every step clearly before starting. The root canal was painless, the clinic is spotless, and the follow-up care was excellent.",
-  },
-  {
-    name: "Amit Deshmukh",
-    treatment: "Dental Cleaning",
-    text: "Very professional clinic near Eastern Royale Society. Scaling was done gently, staff is polite, and WhatsApp appointment booking is quick and easy. Highly recommended in Lohegaon.",
-  },
-  {
-    name: "Pooja Kulkarni",
-    treatment: "Teeth Whitening",
-    text: "Got teeth whitening done here and noticed a visible difference after one session. The doctor is soft-spoken, caring, and the clinic feels modern, calm, and hygienic.",
-  },
-  {
-    name: "Vikram Shinde",
-    treatment: "Braces Consultation",
-    text: "Visited for my daughter's braces consultation. Dr. Sanap explained metal, ceramic, and aligner options with clear guidance and no pressure. Very transparent and patient-friendly.",
-  },
-  {
-    name: "Meera Joshi",
-    treatment: "Smile Design",
-    text: "Beautiful clinic with a reassuring atmosphere. My smile design looks natural, and the doctor checked on me after treatment. Truly patient-first dental care.",
-  },
 ] as const;
 
 export const faqs = [

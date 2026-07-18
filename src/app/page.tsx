@@ -1,15 +1,25 @@
 import ClinicHomeClient from "@/components/clinic-home-client";
-import { siteUrl } from "@/lib/site-data";
+import { doctorName, faqs, siteUrl } from "@/lib/site-data";
 
 const clinicSchema = {
   "@context": "https://schema.org",
   "@type": "Dentist",
+  "@id": `${siteUrl}/#clinic`,
   name: "Dr. Dhanshree's Dental Clinic",
   url: siteUrl,
   telephone: "+918275172931",
   email: "dr.dhanshreedentalclinic@gmail.com",
   priceRange: "$$",
-  image: `${siteUrl}/og-image.svg`,
+  image: `${siteUrl}/images/logo.jpeg`,
+  logo: `${siteUrl}/images/logo.jpeg`,
+  hasMap:
+    "https://www.google.com/maps/place/Dr.+DHANSHREE%27S+Dental+Clinic/@18.6033058,73.9285482,17z",
+  founder: {
+    "@type": "Person",
+    name: doctorName,
+    jobTitle: "Founder & Chief Dentist",
+  },
+  areaServed: ["Lohegaon", "Pathare Wasti", "Wadgaon Shinde Road", "Pune"],
   address: {
     "@type": "PostalAddress",
     streetAddress:
@@ -47,10 +57,35 @@ const clinicSchema = {
     "Orthodontics",
     "Teeth whitening",
   ],
+  availableService: [
+    "Dental Implants",
+    "Teeth Whitening",
+    "Root Canal Treatment",
+    "Braces & Clear Aligners",
+    "Smile Design",
+    "Cosmetic Dentistry",
+  ].map((name) => ({
+    "@type": "MedicalProcedure",
+    name,
+  })),
   sameAs: [
     "https://www.instagram.com/drdhanshree_dentalclinic2025/",
     "https://www.google.com/maps/place/Dr.+DHANSHREE%27S+Dental+Clinic/@18.6033058,73.9285482,17z",
   ],
+};
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "@id": `${siteUrl}/#faq`,
+  mainEntity: faqs.map((faq) => ({
+    "@type": "Question",
+    name: faq.question,
+    acceptedAnswer: {
+      "@type": "Answer",
+      text: faq.answer,
+    },
+  })),
 };
 
 export default function HomePage() {
@@ -59,6 +94,10 @@ export default function HomePage() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(clinicSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
       <ClinicHomeClient />
     </>

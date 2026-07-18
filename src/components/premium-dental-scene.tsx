@@ -72,7 +72,7 @@ function ToothModel() {
       </mesh>
       <mesh position={[0, 0.1, 0.75]} rotation={[Math.PI / 2, 0, 0]} scale={[0.62, 0.2, 0.62]}>
         <torusGeometry args={[1, 0.025, 16, 80]} />
-        <meshStandardMaterial color="#67e8f9" emissive="#06b6d4" emissiveIntensity={0.25} />
+        <meshStandardMaterial color="#e7c873" emissive="#c9a24b" emissiveIntensity={0.5} />
       </mesh>
     </group>
   );
@@ -143,7 +143,7 @@ function ParticleField() {
       <bufferGeometry>
         <bufferAttribute attach="attributes-position" args={[positions, 3]} />
       </bufferGeometry>
-      <pointsMaterial size={0.038} color="#67e8f9" transparent opacity={0.62} sizeAttenuation />
+      <pointsMaterial size={0.038} color="#e7c873" transparent opacity={0.55} sizeAttenuation />
     </points>
   );
 }
@@ -162,7 +162,7 @@ function SceneContent() {
       <ParticleField />
       <ToothModel />
       <SmileArc />
-      <FloatingTool position={[-1.85, 0.45, -0.25]} rotation={[0.28, 0.1, -0.58]} color="#bfdbfe" speed={1.1} />
+      <FloatingTool position={[-1.85, 0.45, -0.25]} rotation={[0.28, 0.1, -0.58]} color="#e7c873" speed={1.1} />
       <FloatingTool position={[1.88, -0.04, -0.35]} rotation={[-0.2, 0.1, 0.62]} color="#a5f3fc" speed={1.35} />
       <mesh position={[1.28, 1.28, -0.65]} rotation={[0.7, 0.3, 0.1]}>
         <torusKnotGeometry args={[0.16, 0.025, 90, 10]} />
@@ -186,10 +186,11 @@ export default function PremiumDentalScene() {
     >
       <Suspense fallback={null}>
         <color attach="background" args={["transparent"]} />
-        <ambientLight intensity={1.8} />
-        <directionalLight position={[4, 5, 3]} intensity={2.25} castShadow />
-        <pointLight position={[-3, 2, 2]} intensity={2.1} color="#06b6d4" />
-        <pointLight position={[2, -2, 3]} intensity={1.45} color="#2563eb" />
+        <ambientLight intensity={0.7} />
+        <directionalLight position={[4, 5, 3]} intensity={2} castShadow />
+        <pointLight position={[-3, 2, 2]} intensity={2.2} color="#67e8f9" />
+        <pointLight position={[2, -2, 3]} intensity={1.8} color="#e7c873" />
+        <pointLight position={[0, 3, -2]} intensity={1.1} color="#a78bfa" />
         <SceneContent />
       </Suspense>
     </Canvas>
