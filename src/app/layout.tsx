@@ -75,6 +75,9 @@ export const metadata: Metadata = {
     index: true,
     follow: true,
   },
+  verification: {
+    google: "M9Hysbs4q_cShLY97zmeS5tMJ3K3lC2NPdGKS33uR8w",
+  },
   icons: {
     icon: "/images/logo.jpeg",
     apple: "/images/logo.jpeg",
