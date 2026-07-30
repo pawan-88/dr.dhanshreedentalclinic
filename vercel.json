@@ -22,7 +22,6 @@
       ]
     },
     {
-      "comment": "The generated OG card is exported as an extensionless file, so the content type must be set explicitly or social scrapers reject it.",
       "source": "/opengraph-image",
       "headers": [
         {
