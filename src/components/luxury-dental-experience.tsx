@@ -27,6 +27,7 @@ import {
   googleMapsEmbedUrl,
   googleReviewsUrl,
   navLinks,
+  phoneDisplay,
   phoneNumber,
   services,
   stats,
@@ -912,7 +913,7 @@ export default function LuxuryDentalExperience() {
             </p>
             <p>10:00 AM - 9:00 PM</p>
             <h3>Contact</h3>
-            <a href={`tel:${phoneNumber}`}>{phoneNumber}</a>
+            <a href={`tel:${phoneNumber}`}>{phoneDisplay}</a>
             <a href="mailto:dr.dhanshreedentalclinic@gmail.com">
               dr.dhanshreedentalclinic@gmail.com
             </a>

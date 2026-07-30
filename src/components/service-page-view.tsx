@@ -15,6 +15,7 @@ import { useState } from "react";
 import {
   doctorName,
   googleReviewsUrl,
+  phoneDisplay,
   phoneNumber,
   whatsappUrl,
 } from "@/lib/site-data";
@@ -105,7 +106,7 @@ export default function ServicePageView({
                 <MessageCircle size={18} />
               </a>
               <a className="magnetic-btn ghost" href={`tel:${phoneNumber}`}>
-                Call {phoneNumber}
+                Call {phoneDisplay}
                 <Phone size={18} />
               </a>
             </div>
@@ -245,7 +246,7 @@ export default function ServicePageView({
             </p>
             <p>10:00 AM - 9:00 PM</p>
             <h3>Contact</h3>
-            <a href={`tel:${phoneNumber}`}>{phoneNumber}</a>
+            <a href={`tel:${phoneNumber}`}>{phoneDisplay}</a>
             <a href="mailto:dr.dhanshreedentalclinic@gmail.com">
               dr.dhanshreedentalclinic@gmail.com
             </a>

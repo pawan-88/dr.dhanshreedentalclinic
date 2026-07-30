@@ -13,6 +13,8 @@ import {
 } from "lucide-react";
 
 export const phoneNumber = "+918275172931";
+/** Human-readable form. `phoneNumber` stays unformatted for tel: links. */
+export const phoneDisplay = "+91 82751 72931";
 export const whatsappNumber = "918275172931";
 export const doctorName = "Dr. Dhanshree Sanap (Ghuge)";
 // MUST match the domain the site is actually served from. A canonical tag
