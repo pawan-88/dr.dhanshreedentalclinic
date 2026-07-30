@@ -475,6 +475,19 @@ a {
   display: block;
 }
 
+.hero-copy h1 .h1-sub {
+  display: block;
+  margin-top: 18px;
+  font-family: var(--font-body, inherit);
+  font-size: clamp(0.8rem, 1.5vw, 0.95rem);
+  font-weight: 600;
+  font-style: normal;
+  line-height: 1.5;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(231, 200, 115, 0.82);
+}
+
 .word-gradient {
   background: linear-gradient(100deg, #fdf3d4 5%, var(--gold) 45%, var(--cyan) 95%);
   -webkit-background-clip: text;
@@ -1805,13 +1818,9 @@ img.comparison-image.before {
   box-shadow: var(--glow-gold);
 }
 
-.premium-footer iframe {
-  width: 100%;
-  height: 190px;
-  margin-top: 6px;
-  border: 1px solid var(--line);
-  border-radius: 18px;
-  filter: grayscale(1) invert(0.92) contrast(0.9);
+.footer-address {
+  font-style: normal;
+  margin: 0 0 10px;
 }
 
 .footer-bottom {
@@ -1882,6 +1891,46 @@ img.comparison-image.before {
     transform: scale(1.7);
     opacity: 0;
   }
+}
+
+/* ---------- Hero entrance (CSS, not JS) ----------
+   The hero H1 and intro copy must be painted on first frame so the LCP
+   element does not wait for React hydration, and so crawlers never see the
+   headline at opacity:0. The animation runs from a visible state outward. */
+
+@keyframes heroEnter {
+  from {
+    opacity: 0;
+    transform: translateY(34px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hero-enter {
+  animation: heroEnter 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.hero-enter-delayed {
+  animation-delay: 0.15s;
+  animation-duration: 1s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-enter,
+  .hero-enter-delayed {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* No-JS / crawler safety net: if scripts never run, reveal everything. */
+.no-js .scroll-reveal {
+  opacity: 1 !important;
+  transform: none !important;
 }
 
 /* ---------- Scroll reveal ---------- */

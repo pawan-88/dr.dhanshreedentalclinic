@@ -150,13 +150,27 @@ function BeforeAfterSlider() {
       </div>
       <div className="comparison-viewport">
         <div className="comparison-image before">
-          <img src="/images/Whitening.jpg" alt="Before teeth whitening treatment" />
+          <img
+            src="/images/Whitening.jpg"
+            alt="Teeth before professional whitening treatment at Dr. Dhanshree's Dental Clinic, Lohegaon, Pune"
+            width={960}
+            height={640}
+            loading="lazy"
+            decoding="async"
+          />
         </div>
         <div
           className="comparison-image after"
           style={{ clipPath: `inset(0 ${100 - position}% 0 0)` }}
         >
-          <img src="/images/Whitening.jpg" alt="After teeth whitening treatment" />
+          <img
+            src="/images/Whitening.jpg"
+            alt="Teeth after professional whitening treatment at Dr. Dhanshree's Dental Clinic, Lohegaon, Pune"
+            width={960}
+            height={640}
+            loading="lazy"
+            decoding="async"
+          />
         </div>
         <div className="comparison-handle" style={{ left: `${position}%` }}>
           <ChevronRight size={16} />
@@ -435,15 +449,13 @@ export default function LuxuryDentalExperience() {
           <div className="hero-halo" aria-hidden="true" />
 
           <div className="hero-grid">
-            <motion.div
-              className="hero-copy"
-              initial={{ opacity: 0, y: 34 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-            >
+            {/* CSS-driven entrance (not framer-motion) so the H1 and intro copy are
+                painted immediately in the pre-rendered HTML — good for LCP and
+                avoids serving crawlers text at opacity:0. */}
+            <div className="hero-copy hero-enter">
               <div className="hero-kicker">
                 <Sparkles size={15} />
-                Lohegaon, Pune
+                Lohegaon, Pune · Open 10 AM – 9 PM
               </div>
               <h1>
                 <span className="line">Where every</span>
@@ -451,11 +463,18 @@ export default function LuxuryDentalExperience() {
                 <span className="line">
                   a <span className="word-italic">masterpiece.</span>
                 </span>
+                {/* Keyword-bearing sub-line kept inside the H1 so the page's primary
+                    heading actually contains the terms people search for locally. */}
+                <span className="h1-sub">
+                  Dental Clinic in Lohegaon, Pune — Implants, Braces &amp; Smile Design
+                </span>
               </h1>
               <p>
-                Modern treatments, a hygienic clinic environment, and {doctorName} guiding
-                every step—from checkups and root canals to smile design and cosmetic
-                dentistry.
+                Looking for a trusted <strong>dentist in Lohegaon, Pune</strong>? Dr.
+                Dhanshree&apos;s Dental Clinic on Wadgaon Shinde Road offers painless root
+                canal treatment, dental implants, braces and clear aligners, teeth
+                whitening, and complete smile design — with modern equipment, a hygienic
+                clinic environment, and {doctorName} guiding every step.
               </p>
               <div className="hero-actions">
                 <CtaLink href={whatsappUrl()} variant="primary">
@@ -479,7 +498,7 @@ export default function LuxuryDentalExperience() {
                       <Star key={index} size={14} fill="currentColor" />
                     ))}
                   </div>
-                  <strong>4.9 Google rating</strong>
+                  <strong>5.0 Google rating</strong>
                   <span>Read patient reviews</span>
                 </a>
                 <div className="mini-stat">
@@ -491,14 +510,9 @@ export default function LuxuryDentalExperience() {
                   <span>Years expertise</span>
                 </div>
               </div>
-            </motion.div>
+            </div>
 
-            <motion.div
-              className="hero-visual"
-              initial={{ opacity: 0, scale: 0.92, y: 32 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              transition={{ duration: 1, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
-            >
+            <div className="hero-visual hero-enter hero-enter-delayed">
               <div className="scene-shell">
                 <div className="scene-fallback" aria-hidden="true">
                     <span className="fallback-halo" />
@@ -586,7 +600,7 @@ export default function LuxuryDentalExperience() {
                 <Sparkles size={18} />
                 Smile Design Ready
               </motion.div>
-            </motion.div>
+            </div>
           </div>
 
           <div className="hero-scroll-hint">Scroll</div>
@@ -599,8 +613,8 @@ export default function LuxuryDentalExperience() {
             <SectionHeading
               index="01"
               eyebrow="Our Treatments"
-              title="Complete dental care for every stage of your smile"
-              description="From preventive checkups to advanced cosmetic work, each treatment is explained clearly so you know what to expect before you visit."
+              title="Dental treatments at our Lohegaon, Pune clinic"
+              description="From preventive checkups and painless root canal treatment to dental implants, braces, and cosmetic dentistry — each treatment is explained clearly so you know what to expect before you visit."
             />
             <div className="services-grid">
               {services.map((service, index) => {
@@ -645,7 +659,9 @@ export default function LuxuryDentalExperience() {
                 <span className="eyebrow" data-index="02">
                   Why Choose Us
                 </span>
-                <h2>Advanced care with a calm, patient-first approach.</h2>
+                <h2>
+                  Why patients in Lohegaon choose Dr. Dhanshree&apos;s Dental Clinic
+                </h2>
                 <p>
                   Whether it is your first visit or a complex treatment plan, we focus on
                   clear communication, gentle chairside care, and a clean clinic experience
@@ -720,7 +736,9 @@ export default function LuxuryDentalExperience() {
                 <img
                   className="doctor-photo"
                   src="/images/Dr.ImgD.jpg"
-                  alt={`${doctorName}, Founder and Chief Dentist at Dr. Dhanshree's Dental Clinic`}
+                  alt={`${doctorName}, Founder and Chief Dentist at Dr. Dhanshree's Dental Clinic, Lohegaon, Pune`}
+                  width={720}
+                  height={900}
                   loading="lazy"
                   decoding="async"
                 />
@@ -733,7 +751,9 @@ export default function LuxuryDentalExperience() {
                 <span className="eyebrow" data-index="04">
                   Meet Your Dentist
                 </span>
-                <h2>Gentle care, precise treatment, and a smile-first philosophy.</h2>
+                <h2>
+                  Meet {doctorName} — Dentist in Lohegaon, Pune
+                </h2>
                 <p>
                   {doctorName} combines modern dental technology with clear, compassionate
                   communication—helping patients feel informed, comfortable, and confident
@@ -757,8 +777,8 @@ export default function LuxuryDentalExperience() {
             <SectionHeading
               index="05"
               eyebrow="Find Us"
-              title="Visit us on Google Maps"
-              description="See our Lohegaon clinic location and read original patient reviews directly on Google."
+              title="Our dental clinic location in Lohegaon, Pune"
+              description="Shop No. 2, Muktai Plaza, Wadgaon Shinde Road, opposite Eastern Royale Society, Pathare Wasti, Lohegaon, Pune 411047. See directions and read original patient reviews on Google."
               center
             />
             <div className="reviews-map scroll-reveal">
@@ -788,7 +808,9 @@ export default function LuxuryDentalExperience() {
                 <span className="eyebrow" data-index="07">
                   Book Your Visit
                 </span>
-                <h2>Book your dental visit in under a minute on WhatsApp.</h2>
+                <h2>
+                  Book a dentist appointment in Lohegaon, Pune — in under a minute
+                </h2>
                 <p>
                   Share your name, phone number, and treatment. Our team will confirm your
                   appointment quickly—often the same day.
@@ -872,16 +894,27 @@ export default function LuxuryDentalExperience() {
 
           <div>
             <h3>Find Us</h3>
-            <p className="footer-line">
-              <MapPin size={16} />
-              Shop No. 2, Muktai Plaza, Wadgaon Shinde Road, Lohegaon, Pune 411047
-            </p>
-            <iframe
-              title="Dr. Dhanshree's Dental Clinic location"
-              src={googleMapsEmbedUrl}
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-            />
+            {/* Full NAP (name / address / phone) in crawlable text — this must
+                match the Google Business Profile exactly for local ranking. */}
+            <address className="footer-address">
+              <p className="footer-line">
+                <MapPin size={16} />
+                <span>
+                  Dr. Dhanshree&apos;s Dental Clinic
+                  <br />
+                  Shop No. 2, Muktai Plaza, Wadgaon Shinde Road,
+                  <br />
+                  Opp. Eastern Royale Society, Pathare Wasti,
+                  <br />
+                  Lohegaon, Pune, Maharashtra 411047
+                </span>
+              </p>
+            </address>
+            {/* The second Google Maps embed was removed: it duplicated the one in
+                the Location section and cost a full extra third-party load. */}
+            <a href={googleReviewsUrl} target="_blank" rel="noreferrer">
+              Get directions on Google Maps
+            </a>
           </div>
         </div>
         <div className="footer-bottom">

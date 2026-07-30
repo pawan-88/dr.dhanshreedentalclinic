@@ -5,7 +5,24 @@
 [build.environment]
   NODE_VERSION = "22"
 
+# The previous catch-all `/* -> /index.html 200` rule made every mistyped or
+# stale URL return the homepage with a 200 status. Google treats that as a soft
+# 404 and can index the duplicates. This is a statically exported site with no
+# client-side router, so unknown paths should genuinely 404.
 [[redirects]]
   from = "/*"
-  to = "/index.html"
-  status = 200
+  to = "/404.html"
+  status = 404
+
+# The generated Open Graph card is exported without a file extension, so the
+# content type has to be declared or social scrapers will refuse to render it.
+[[headers]]
+  for = "/opengraph-image"
+  [headers.values]
+    Content-Type = "image/png"
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/images/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"

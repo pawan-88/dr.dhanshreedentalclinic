@@ -1,5 +1,37 @@
 # https://www.robotstxt.org/robotstxt.html
+
 User-agent: *
+Allow: /
+Disallow: /_next/static/chunks/
+
+# Search crawlers
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+# AI answer engines — allowing these helps the clinic get cited when people ask
+# assistants for a dentist in Lohegaon / Pune.
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-SearchBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
 Allow: /
 
 Sitemap: https://drdhanshreedentalclinic.vercel.app/sitemap.xml
