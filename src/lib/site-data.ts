@@ -15,7 +15,10 @@ import {
 export const phoneNumber = "+918275172931";
 export const whatsappNumber = "918275172931";
 export const doctorName = "Dr. Dhanshree Sanap (Ghuge)";
-export const siteUrl = "https://drdhanshreedentalclinic.vercel.app";
+// MUST match the domain the site is actually served from. A canonical tag
+// pointing at a different host tells Google to index that host instead — which
+// silently de-indexes the live site.
+export const siteUrl = "https://dr-dhanshreedentalclinic-seven.vercel.app";
 export const googleReviewsUrl =
   "https://www.google.com/maps/place/Dr.+DHANSHREE%27S+Dental+Clinic/@18.6033058,73.9285482,17z/data=!4m8!3m7!1s0x3bc2c7a86d8f74af:0x6a9c3fab4620f1c3!8m2!3d18.6033058!4d73.9285482!9m1!1b1!16s%2Fg%2F11v0q8xq8x";
 export const googleMapsEmbedUrl =
@@ -44,6 +47,8 @@ export type ServiceItem = {
   icon: LucideIcon;
   accent: string;
   image: string;
+  /** Slug of the dedicated landing page, when one exists. */
+  slug?: string;
 };
 
 export const services: ServiceItem[] = [
@@ -54,6 +59,7 @@ export const services: ServiceItem[] = [
     icon: ShieldCheck,
     accent: "#2563eb",
     image: "/images/Dental-Implants.jpg",
+    slug: "dental-implants-lohegaon",
   },
   {
     title: "Teeth Whitening",
@@ -62,6 +68,7 @@ export const services: ServiceItem[] = [
     icon: Sparkles,
     accent: "#06b6d4",
     image: "/images/teeth white.jpg",
+    slug: "teeth-whitening-lohegaon",
   },
   {
     title: "Root Canal",
@@ -70,6 +77,7 @@ export const services: ServiceItem[] = [
     icon: HeartPulse,
     accent: "#6366f1",
     image: "/images/root canel.jpg",
+    slug: "root-canal-treatment-lohegaon",
   },
   {
     title: "Braces",
@@ -78,6 +86,7 @@ export const services: ServiceItem[] = [
     icon: Stethoscope,
     accent: "#14b8a6",
     image: "/images/braces.jpg",
+    slug: "braces-and-aligners-lohegaon",
   },
   {
     title: "Smile Design",
@@ -86,6 +95,7 @@ export const services: ServiceItem[] = [
     icon: WandSparkles,
     accent: "#8b5cf6",
     image: "/images/Veneers.jpg",
+    slug: "smile-design-lohegaon",
   },
   {
     title: "Cosmetic Dentistry",

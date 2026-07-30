@@ -2,7 +2,6 @@
 
 User-agent: *
 Allow: /
-Disallow: /_next/static/chunks/
 
 # Search crawlers
 User-agent: Googlebot
@@ -34,4 +33,4 @@ Allow: /
 User-agent: Google-Extended
 Allow: /
 
-Sitemap: https://drdhanshreedentalclinic.vercel.app/sitemap.xml
+Sitemap: https://dr-dhanshreedentalclinic-seven.vercel.app/sitemap.xml

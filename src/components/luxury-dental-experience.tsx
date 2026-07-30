@@ -18,6 +18,7 @@ import {
   X,
 } from "lucide-react";
 import { motion } from "framer-motion";
+import Link from "next/link";
 import { FormEvent, useEffect, useRef, useState } from "react";
 import {
   doctorHighlights,
@@ -641,10 +642,24 @@ export default function LuxuryDentalExperience() {
                     </div>
                     <h3>{service.title}</h3>
                     <p>{service.description}</p>
-                    <a href={whatsappUrl(`Hello, I want to know more about ${service.title}.`)}>
-                      Book {service.title}
-                      <ArrowRight size={16} />
-                    </a>
+                    {/* Internal link to the dedicated landing page. These links
+                        are what pass authority from the homepage to the service
+                        pages — without them the new pages sit orphaned. */}
+                    {service.slug ? (
+                      <Link href={`/${service.slug}`}>
+                        {service.title} in Lohegaon
+                        <ArrowRight size={16} />
+                      </Link>
+                    ) : (
+                      <a
+                        href={whatsappUrl(
+                          `Hello, I want to know more about ${service.title}.`,
+                        )}
+                      >
+                        Book {service.title}
+                        <ArrowRight size={16} />
+                      </a>
+                    )}
                   </article>
                 );
               })}
@@ -867,6 +882,17 @@ export default function LuxuryDentalExperience() {
                 <MessageCircle size={18} />
               </a>
             </div>
+          </div>
+
+          <div>
+            <h3>Treatments</h3>
+            {services
+              .filter((service) => service.slug)
+              .map((service) => (
+                <Link key={service.slug} href={`/${service.slug}`}>
+                  {service.title}
+                </Link>
+              ))}
           </div>
 
           <div>
