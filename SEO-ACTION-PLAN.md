@@ -3,7 +3,7 @@
 The website work is done. Everything below is off-page, and for a local dental
 clinic it matters **more** than the code did. None of it requires a developer.
 
-Live site: https://dr-dhanshreedentalclinic-seven.vercel.app
+Live site: https://drdhanshreedental.in
 
 ---
 
@@ -15,7 +15,7 @@ Google's cached copy of your site is from when it served a blank page. Waiting
 for a natural recrawl could take weeks.
 
 1. Go to [search.google.com/search-console](https://search.google.com/search-console)
-2. Add a **URL prefix** property for `https://dr-dhanshreedentalclinic-seven.vercel.app`
+2. Add a **URL prefix** property for `https://drdhanshreedental.in`
    — the verification meta tag is already on every page, so it should verify
    instantly.
 3. **Sitemaps** → submit `sitemap.xml`
@@ -23,12 +23,12 @@ for a natural recrawl could take weeks.
    one at a time:
 
 ```
-https://dr-dhanshreedentalclinic-seven.vercel.app/
-https://dr-dhanshreedentalclinic-seven.vercel.app/dental-implants-lohegaon
-https://dr-dhanshreedentalclinic-seven.vercel.app/root-canal-treatment-lohegaon
-https://dr-dhanshreedentalclinic-seven.vercel.app/braces-and-aligners-lohegaon
-https://dr-dhanshreedentalclinic-seven.vercel.app/teeth-whitening-lohegaon
-https://dr-dhanshreedentalclinic-seven.vercel.app/smile-design-lohegaon
+https://drdhanshreedental.in/
+https://drdhanshreedental.in/dental-implants-lohegaon
+https://drdhanshreedental.in/root-canal-treatment-lohegaon
+https://drdhanshreedental.in/braces-and-aligners-lohegaon
+https://drdhanshreedental.in/teeth-whitening-lohegaon
+https://drdhanshreedental.in/smile-design-lohegaon
 ```
 
 ### 2. Google Business Profile — the single biggest factor
@@ -135,7 +135,7 @@ handle the redirect so the indexing you have built up carries across.
 
 ## What to expect, honestly
 
-- **Weeks 1–2:** pages get indexed. Search `site:dr-dhanshreedentalclinic-seven.vercel.app`
+- **Weeks 1–2:** pages get indexed. Search `site:drdhanshreedental.in`
   in Google to check.
 - **Weeks 3–8:** you start appearing for specific, low-competition searches —
   "Dr Dhanshree dental clinic", "dental clinic Wadgaon Shinde Road".

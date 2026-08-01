@@ -26,7 +26,7 @@ import {
   faqs,
   googleMapsEmbedUrl,
   googleReviewsUrl,
-  navLinks,
+  pageLinks,
   phoneDisplay,
   phoneNumber,
   services,
@@ -309,7 +309,6 @@ function AppointmentForm() {
 
 export default function LuxuryDentalExperience() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState("home");
   const progressRef = useRef<HTMLDivElement>(null);
   const reducedMotion = useMediaQuery("(prefers-reduced-motion: reduce)");
   const finePointer = useMediaQuery("(pointer: fine)");
@@ -317,20 +316,6 @@ export default function LuxuryDentalExperience() {
   useScrollReveal(reducedMotion);
 
   useEffect(() => {
-    const sections = navLinks
-      .map((link) => document.querySelector(link.href))
-      .filter((section): section is Element => section !== null);
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) setActiveSection(entry.target.id);
-        });
-      },
-      { rootMargin: "-30% 0px -55% 0px", threshold: 0.15 },
-    );
-
-    sections.forEach((section) => observer.observe(section));
-
     let ticking = false;
 
     const updateProgress = () => {
@@ -352,7 +337,6 @@ export default function LuxuryDentalExperience() {
     window.addEventListener("scroll", onScroll, { passive: true });
 
     return () => {
-      observer.disconnect();
       window.removeEventListener("scroll", onScroll);
     };
   }, []);
@@ -391,14 +375,15 @@ export default function LuxuryDentalExperience() {
         </a>
 
         <nav aria-label="Primary navigation">
-          {navLinks.map((link) => (
-            <a
+          {pageLinks.map((link) => (
+            <Link
               key={link.href}
               href={link.href}
-              className={activeSection === link.href.slice(1) ? "active" : ""}
+              className={link.href === "/" ? "active" : ""}
+              aria-current={link.href === "/" ? "page" : undefined}
             >
               {link.label}
-            </a>
+            </Link>
           ))}
         </nav>
 
@@ -438,10 +423,10 @@ export default function LuxuryDentalExperience() {
           >
             <X size={22} />
           </button>
-          {navLinks.map((link) => (
-            <a key={link.href} href={link.href} onClick={() => setMenuOpen(false)}>
+          {pageLinks.map((link) => (
+            <Link key={link.href} href={link.href} onClick={() => setMenuOpen(false)}>
               {link.label}
-            </a>
+            </Link>
           ))}
         </motion.div>
       </motion.div>
@@ -898,10 +883,10 @@ export default function LuxuryDentalExperience() {
 
           <div>
             <h3>Quick Links</h3>
-            {navLinks.map((link) => (
-              <a key={link.href} href={link.href}>
+            {pageLinks.map((link) => (
+              <Link key={link.href} href={link.href}>
                 {link.label}
-              </a>
+              </Link>
             ))}
           </div>
 

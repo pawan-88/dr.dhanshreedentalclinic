@@ -20,7 +20,7 @@ export const doctorName = "Dr. Dhanshree Sanap (Ghuge)";
 // MUST match the domain the site is actually served from. A canonical tag
 // pointing at a different host tells Google to index that host instead — which
 // silently de-indexes the live site.
-export const siteUrl = "https://dr-dhanshreedentalclinic-seven.vercel.app";
+export const siteUrl = "https://drdhanshreedental.in";
 export const googleReviewsUrl =
   "https://www.google.com/maps/place/Dr.+DHANSHREE%27S+Dental+Clinic/@18.6033058,73.9285482,17z/data=!4m8!3m7!1s0x3bc2c7a86d8f74af:0x6a9c3fab4620f1c3!8m2!3d18.6033058!4d73.9285482!9m1!1b1!16s%2Fg%2F11v0q8xq8x";
 export const googleMapsEmbedUrl =
@@ -41,6 +41,15 @@ export const navLinks = [
   { label: "Doctor", href: "#doctor" },
   { label: "FAQ", href: "#faq" },
   { label: "Contact", href: "#appointment" },
+] as const;
+
+/** Multi-page navigation — real routes, used in the header and footer sitewide. */
+export const pageLinks = [
+  { label: "Home", href: "/" },
+  { label: "Treatments", href: "/services" },
+  { label: "About Doctor", href: "/about-dr-dhanshree" },
+  { label: "FAQ", href: "/faq" },
+  { label: "Contact", href: "/contact" },
 ] as const;
 
 export type ServiceItem = {

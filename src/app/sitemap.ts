@@ -15,11 +15,35 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "weekly",
       priority: 1,
     },
+    {
+      url: `${siteUrl}/services`,
+      lastModified,
+      changeFrequency: "monthly",
+      priority: 0.9,
+    },
     ...servicePages.map((page) => ({
       url: `${siteUrl}/${page.slug}`,
       lastModified,
       changeFrequency: "monthly" as const,
       priority: 0.8,
     })),
+    {
+      url: `${siteUrl}/about-dr-dhanshree`,
+      lastModified,
+      changeFrequency: "monthly",
+      priority: 0.7,
+    },
+    {
+      url: `${siteUrl}/faq`,
+      lastModified,
+      changeFrequency: "monthly",
+      priority: 0.7,
+    },
+    {
+      url: `${siteUrl}/contact`,
+      lastModified,
+      changeFrequency: "monthly",
+      priority: 0.7,
+    },
   ];
 }
