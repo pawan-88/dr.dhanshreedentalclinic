@@ -48,6 +48,7 @@ export const pageLinks = [
   { label: "Home", href: "/" },
   { label: "Treatments", href: "/services" },
   { label: "About Doctor", href: "/about-dr-dhanshree" },
+  { label: "Patient Stories", href: "/patient-stories" },
   { label: "FAQ", href: "/faq" },
   { label: "Contact", href: "/contact" },
 ] as const;

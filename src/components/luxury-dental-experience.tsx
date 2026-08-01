@@ -201,7 +201,7 @@ function FaqSection() {
     <section id="faq" className="section faq-section">
       <div className="section-inner">
         <SectionHeading
-          index="06"
+          index="07"
           eyebrow="Common Questions"
           title="Answers before your first visit"
           description="Quick answers to the questions Lohegaon patients ask us most often about treatments, timings, and booking."
@@ -800,13 +800,35 @@ export default function LuxuryDentalExperience() {
           </div>
         </section>
 
+        <section className="section stories-preview-section">
+          <div className="section-inner">
+            <div className="stories-preview scroll-reveal">
+              <div>
+                <span className="eyebrow" data-index="06">
+                  Patient Stories
+                </span>
+                <h2>Hear it from our patients, in their own words.</h2>
+                <p>
+                  Video testimonials, photos, and reviews from real patients
+                  who visited our Lohegaon clinic — root canals, implants,
+                  braces, whitening, and smile designs.
+                </p>
+              </div>
+              <Link className="magnetic-btn primary" href="/patient-stories">
+                Watch Patient Stories
+                <ArrowRight size={18} />
+              </Link>
+            </div>
+          </div>
+        </section>
+
         <FaqSection />
 
         <section id="appointment" className="section appointment-section">
           <div className="section-inner">
             <div className="appointment-shell">
               <div className="appointment-copy scroll-reveal">
-                <span className="eyebrow" data-index="07">
+                <span className="eyebrow" data-index="08">
                   Book Your Visit
                 </span>
                 <h2>
