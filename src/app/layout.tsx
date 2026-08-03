@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import Script from "next/script";
 import { Fraunces, Inter } from "next/font/google";
 import { siteUrl } from "@/lib/site-data";
 import "./globals.css";
@@ -136,6 +137,20 @@ export default function RootLayout({
             __html: `document.documentElement.classList.remove('no-js');`,
           }}
         />
+        {/* Google tag (gtag.js) — Google Analytics 4 */}
+        <Script
+          async
+          src="https://www.googletagmanager.com/gtag/js?id=G-4CGLQ18XR0"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-4CGLQ18XR0');
+          `}
+        </Script>
       </head>
       <body>{children}</body>
     </html>
